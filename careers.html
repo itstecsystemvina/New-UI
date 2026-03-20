@@ -1,0 +1,554 @@
+d
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tuyển dụng – S-Tec System Vina</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px
+    }
+
+    .job-card {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--r-xl);
+      padding: 32px;
+      transition: var(--t);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden
+    }
+
+    .job-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--blue-light));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: var(--t)
+    }
+
+    .job-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: transparent
+    }
+
+    .job-card:hover::after {
+      transform: scaleX(1)
+    }
+
+    .job-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px
+    }
+
+    .job-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(29, 78, 216, .08);
+      border-radius: var(--r-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0
+    }
+
+    .job-badge {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      padding: 5px 12px;
+      border-radius: var(--r-full);
+      background: rgba(29, 78, 216, .08);
+      color: var(--blue);
+      white-space: nowrap
+    }
+
+    .job-badge.urgent {
+      background: rgba(220, 38, 38, .08);
+      color: #DC2626
+    }
+
+    .job-title {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.35;
+      margin-bottom: 4px
+    }
+
+    .job-dept {
+      font-size: .8rem;
+      color: var(--blue);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em
+    }
+
+    .job-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px
+    }
+
+    .job-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .78rem;
+      color: var(--gray-600);
+      background: var(--off-white);
+      padding: 5px 10px;
+      border-radius: var(--r-sm)
+    }
+
+    .job-excerpt {
+      font-size: .875rem;
+      line-height: 1.7;
+      color: var(--gray-600);
+      flex: 1
+    }
+
+    .job-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--gray-100);
+      margin-top: auto
+    }
+
+    .job-date {
+      font-size: .75rem;
+      color: var(--gray-400);
+      font-weight: 500
+    }
+
+    .job-apply {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--blue);
+      transition: var(--t)
+    }
+
+    .job-apply:hover {
+      gap: 10px
+    }
+
+    /* No openings */
+    .no-jobs {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--gray-400)
+    }
+
+    .no-jobs .icon {
+      font-size: 3.5rem;
+      margin-bottom: 16px
+    }
+
+    .no-jobs h3 {
+      color: var(--navy);
+      margin-bottom: 8px
+    }
+
+    /* Benefits */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px
+    }
+
+    .benefit-card {
+      text-align: center;
+      padding: 32px 20px;
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--r-lg);
+      transition: var(--t)
+    }
+
+    .benefit-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px)
+    }
+
+    .benefit-icon {
+      font-size: 2rem;
+      margin-bottom: 14px
+    }
+
+    .benefit-card h4 {
+      font-size: .9375rem;
+      color: var(--navy);
+      margin-bottom: 6px
+    }
+
+    .benefit-card p {
+      font-size: .84rem
+    }
+
+    /* Skeleton */
+    .skel-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px
+    }
+
+    .skel-card {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--r-xl);
+      padding: 32px
+    }
+
+    .skel-line {
+      height: 11px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      margin-bottom: 12px
+    }
+
+    .skel-line.s {
+      width: 50%
+    }
+
+    .skel-line.xs {
+      width: 30%
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 200% 0
+      }
+
+      100% {
+        background-position: -200% 0
+      }
+    }
+
+    .state-box {
+      text-align: center;
+      padding: 64px 24px;
+      color: var(--gray-400)
+    }
+
+    .state-box .icon {
+      font-size: 3rem;
+      margin-bottom: 16px
+    }
+
+    @media(max-width:768px) {
+      .jobs-grid {
+        grid-template-columns: 1fr
+      }
+
+      .benefits-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:480px) {
+      .benefits-grid {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="navbar-inner">
+        <a href="index.html" class="logo">
+          <div
+            style="width:38px;height:38px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:.8rem;flex-shrink:0">
+            ST</div>
+          <div class="logo-text">S-TEC<br><span>SYSTEM VINA</span></div>
+        </a>
+        <nav class="nav-links">
+          <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+          <a href="about.html" data-vi="Giới thiệu" data-en="About">Giới thiệu</a>
+          <a href="index.html#services" data-vi="Dịch vụ" data-en="Services">Dịch vụ</a>
+          <a href="security.html" data-vi="An ninh" data-en="Security">An ninh</a>
+          <a href="news.html" data-vi="Tin tức" data-en="News">Tin tức</a>
+          <a href="careers.html" class="active" data-vi="Tuyển dụng" data-en="Careers">Tuyển dụng</a>
+          <a href="index.html#contact" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+        </nav>
+        <div class="nav-right">
+          <div class="lang-toggle">
+            <button class="lang-btn active" onclick="setLang('vi')">VI</button>
+            <button class="lang-btn" onclick="setLang('en')">EN</button>
+          </div>
+          <a href="index.html#contact" class="nav-links nav-cta btn" data-vi="Liên hệ ngay" data-en="Contact Us">Liên hệ
+            ngay</a>
+        </div>
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+    <a href="about.html" data-vi="Giới thiệu" data-en="About">Giới thiệu</a>
+    <a href="index.html#services" data-vi="Dịch vụ" data-en="Services">Dịch vụ</a>
+    <a href="security.html" data-vi="An ninh" data-en="Security">An ninh</a>
+    <a href="news.html" data-vi="Tin tức" data-en="News">Tin tức</a>
+    <a href="careers.html" data-vi="Tuyển dụng" data-en="Careers">Tuyển dụng</a>
+    <a href="index.html#contact" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+    <div class="mobile-lang">
+      <button class="lang-btn active" onclick="setLang('vi')">VI</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <!-- Page hero -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+        <span class="bc-sep">/</span>
+        <span class="bc-cur" data-vi="Tuyển dụng" data-en="Careers">Tuyển dụng</span>
+      </div>
+      <h1 data-vi="Cơ hội nghề nghiệp" data-en="Career Opportunities">Cơ hội nghề nghiệp</h1>
+      <p data-vi="Gia nhập đội ngũ S-Tec System Vina — nơi mỗi thành viên đều được phát triển và đóng góp vào sứ mệnh chung."
+        data-en="Join the S-Tec System Vina team — where every member grows and contributes to a shared mission.">Gia
+        nhập đội ngũ S-Tec System Vina — nơi mỗi thành viên đều được phát triển và đóng góp vào sứ mệnh chung.</p>
+    </div>
+  </section>
+
+  <!-- Job listings -->
+  <section>
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label" data-vi="Vị trí đang tuyển" data-en="Open Positions">Vị trí đang tuyển</span>
+        <h2 data-vi="Chúng tôi đang tìm kiếm bạn" data-en="We Are Looking For You">Chúng tôi đang tìm kiếm bạn</h2>
+        <p id="job-count-text" data-vi="Đang tải danh sách tuyển dụng..." data-en="Loading job listings...">Đang tải
+          danh sách tuyển dụng...</p>
+      </div>
+      <div id="jobs-wrap" class="fade-up"></div>
+      <div id="pagination" class="pagination fade-up" style="margin-top:40px"></div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section style="background:var(--off-white)">
+    <div class="container">
+      <div class="section-header center fade-up">
+        <span class="section-label" data-vi="Tại sao gia nhập chúng tôi?" data-en="Why Join Us?">Tại sao gia nhập chúng
+          tôi?</span>
+        <h2 data-vi="Quyền lợi của bạn tại S-Tec" data-en="Your Benefits at S-Tec">Quyền lợi của bạn tại S-Tec</h2>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit-card fade-up">
+          <div class="benefit-icon">📈</div>
+          <h4 data-vi="Lộ trình thăng tiến rõ ràng" data-en="Clear Career Path">Lộ trình thăng tiến rõ ràng</h4>
+          <p data-vi="Cơ hội thăng tiến minh bạch, đánh giá năng lực định kỳ và kế hoạch phát triển cá nhân."
+            data-en="Transparent promotion opportunities, regular performance reviews, and personal development plans.">
+            Cơ hội thăng tiến minh bạch, đánh giá năng lực định kỳ và kế hoạch phát triển cá nhân.</p>
+        </div>
+        <div class="benefit-card fade-up">
+          <div class="benefit-icon">🎓</div>
+          <h4 data-vi="Đào tạo chuyên nghiệp" data-en="Professional Training">Đào tạo chuyên nghiệp</h4>
+          <p data-vi="Chương trình đào tạo nội bộ và quốc tế, hỗ trợ học phí và chứng chỉ nghề nghiệp."
+            data-en="Internal and international training programmes, tuition support and professional certifications.">
+            Chương trình đào tạo nội bộ và quốc tế, hỗ trợ học phí và chứng chỉ nghề nghiệp.</p>
+        </div>
+        <div class="benefit-card fade-up">
+          <div class="benefit-icon">🏥</div>
+          <h4 data-vi="Phúc lợi toàn diện" data-en="Comprehensive Benefits">Phúc lợi toàn diện</h4>
+          <p data-vi="Bảo hiểm sức khỏe, bảo hiểm xã hội đầy đủ, thưởng hiệu quả và các khoản phúc lợi cạnh tranh."
+            data-en="Health insurance, full social insurance, performance bonuses, and competitive benefit packages.">
+            Bảo hiểm sức khỏe, bảo hiểm xã hội đầy đủ, thưởng hiệu quả và các khoản phúc lợi cạnh tranh.</p>
+        </div>
+        <div class="benefit-card fade-up">
+          <div class="benefit-icon">🌏</div>
+          <h4 data-vi="Môi trường quốc tế" data-en="International Environment">Môi trường quốc tế</h4>
+          <p data-vi="Làm việc trong hệ sinh thái S-Tec toàn cầu, tiếp cận cơ hội hợp tác và phát triển quốc tế."
+            data-en="Work within the global S-Tec ecosystem, with access to international collaboration and growth opportunities.">
+            Làm việc trong hệ sinh thái S-Tec toàn cầu, tiếp cận cơ hội hợp tác và phát triển quốc tế.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding:80px 0">
+    <div class="container">
+      <div class="cta-banner fade-up">
+        <h2 data-vi="Không tìm thấy vị trí phù hợp?" data-en="Didn't Find the Right Role?">Không tìm thấy vị trí phù
+          hợp?</h2>
+        <p data-vi="Hãy gửi CV của bạn cho chúng tôi. Chúng tôi luôn chào đón những tài năng muốn đồng hành cùng S-Tec."
+          data-en="Send us your CV anyway. We always welcome talented individuals who want to grow with S-Tec.">Hãy gửi
+          CV của bạn cho chúng tôi. Chúng tôi luôn chào đón những tài năng muốn đồng hành cùng S-Tec.</p>
+        <div class="cta-actions">
+          <a href="mailto:info@stecsystem.com.vn?subject=Ứng tuyển tự do" class="btn btn-primary"
+            data-vi="Gửi CV của bạn →" data-en="Send Your CV →">Gửi CV của bạn →</a>
+          <a href="index.html#contact" class="btn btn-outline-white" data-vi="Liên hệ với chúng tôi"
+            data-en="Contact Us">Liên hệ với chúng tôi</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo-text">S-TEC <span>SYSTEM VINA</span></span>
+          <p data-vi="Công ty Cổ phần S-Tec System Vina — Đối tác dịch vụ toàn diện, đáng tin cậy tại Việt Nam."
+            data-en="S-Tec System Vina JSC — Your trusted, comprehensive service partner in Vietnam.">Công ty Cổ phần
+            S-Tec System Vina — Đối tác dịch vụ toàn diện, đáng tin cậy tại Việt Nam.</p>
+        </div>
+        <div class="footer-col">
+          <h5 data-vi="Công ty" data-en="Company">Công ty</h5>
+          <ul>
+            <li><a href="about.html" data-vi="Giới thiệu" data-en="About Us">Giới thiệu</a></li>
+            <li><a href="news.html" data-vi="Tin tức" data-en="News">Tin tức</a></li>
+            <li><a href="careers.html" data-vi="Tuyển dụng" data-en="Careers">Tuyển dụng</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5 data-vi="Dịch vụ" data-en="Services">Dịch vụ</h5>
+          <ul>
+            <li><a href="security.html" data-vi="An ninh bảo vệ" data-en="Security">An ninh bảo vệ</a></li>
+            <li><a href="#" data-vi="Kiểm soát côn trùng" data-en="Pest Control">Kiểm soát côn trùng</a></li>
+            <li><a href="#" data-vi="Quản lý cơ sở vật chất" data-en="Facility Management">Quản lý cơ sở vật chất</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <span>Copyright 2026 © S-Tec System Vina</span>
+        <span data-vi="Được thiết kế với ♥ tại Hà Nội" data-en="Designed with ♥ in Hanoi">Được thiết kế với ♥ tại Hà
+          Nội</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="wp-api.js"></script>
+  <script>
+    let currentLang = localStorage.getItem('stec-lang') || 'vi';
+    function setLang(lang) {
+      currentLang = lang; localStorage.setItem('stec-lang', lang);
+      document.querySelectorAll('[data-vi]').forEach(el => el.textContent = el.dataset[lang] || el.dataset.vi);
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.lang-btn').forEach(b => { if ((b.textContent === 'VI' && lang === 'vi') || (b.textContent === 'EN' && lang === 'en')) b.classList.add('active'); });
+      document.documentElement.lang = lang === 'vi' ? 'vi' : 'en';
+    }
+    setLang(currentLang);
+    window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20));
+    function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+    document.querySelectorAll('.mobile-nav a').forEach(l => l.addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open')));
+    new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: .08 })
+      .observe(document.querySelector('section'));
+
+    const vi = x => currentLang === 'vi' ? x.vi : x.en;
+    let catId = null, curPage = 1, totPages = 1;
+
+    const skeleton = () => `<div class="skel-grid">${Array(4).fill(`
+    <div class="skel-card">
+      <div class="skel-line xs"></div><div class="skel-line s"></div>
+      <div class="skel-line"></div><div class="skel-line"></div><div class="skel-line xs"></div>
+    </div>`).join('')}</div>`;
+
+    function renderJob(p) {
+      const excerpt = STEC_WP.stripHtml(p.excerpt.rendered).slice(0, 160) + '…';
+      const date = STEC_WP.formatDate(p.date);
+      return `
+      <a href="${p.link}" target="_blank" class="job-card">
+        <div class="job-header">
+          <div class="job-icon">👔</div>
+          <span class="job-badge">${vi({ vi: 'Đang tuyển', en: 'Hiring' })}</span>
+        </div>
+        <div>
+          <div class="job-title">${p.title.rendered}</div>
+          <div class="job-dept">S-Tec System Vina</div>
+        </div>
+        <div class="job-meta">
+          <span class="job-tag">📍 Hà Nội</span>
+          <span class="job-tag">⏰ ${vi({ vi: 'Toàn thời gian', en: 'Full-time' })}</span>
+        </div>
+        <p class="job-excerpt">${excerpt}</p>
+        <div class="job-footer">
+          <span class="job-date">${vi({ vi: 'Đăng ngày', en: 'Posted' })} ${date}</span>
+          <span class="job-apply">${vi({ vi: 'Xem chi tiết →', en: 'View Details →' })}</span>
+        </div>
+      </a>`;
+    }
+
+    function renderPagination() {
+      const el = document.getElementById('pagination');
+      if (totPages <= 1) { el.innerHTML = ''; return; }
+      let h = `<button class="page-btn" onclick="loadPage(${curPage - 1})" ${curPage === 1 ? 'disabled' : ''}>‹</button>`;
+      for (let i = 1; i <= totPages; i++) h += `<button class="page-btn ${i === curPage ? 'active' : ''}" onclick="loadPage(${i})">${i}</button>`;
+      h += `<button class="page-btn" onclick="loadPage(${curPage + 1})" ${curPage === totPages ? 'disabled' : ''}>›</button>`;
+      el.innerHTML = h;
+    }
+
+    async function loadPage(page) {
+      curPage = page;
+      document.getElementById('jobs-wrap').innerHTML = skeleton();
+      try {
+        const { posts, totalPages: tp, total } = await STEC_WP.getPosts(catId, page, 6);
+        totPages = tp;
+        const countEl = document.getElementById('job-count-text');
+        if (!posts.length) {
+          countEl.textContent = vi({ vi: 'Hiện tại chưa có vị trí tuyển dụng. Vui lòng quay lại sau.', en: 'No open positions at the moment. Please check back later.' });
+          document.getElementById('jobs-wrap').innerHTML = `
+          <div class="no-jobs">
+            <div class="icon">🔍</div>
+            <h3>${vi({ vi: 'Chưa có vị trí nào', en: 'No Open Positions' })}</h3>
+            <p>${vi({ vi: 'Hiện tại chưa có vị trí tuyển dụng. Hãy gửi CV để chúng tôi liên hệ khi có.', en: 'No openings right now. Send your CV and we\'ll reach out when a role opens up.' })}</p>
+          </div>`;
+        } else {
+          countEl.textContent = vi({ vi: `Hiện có ${total} vị trí đang tuyển dụng`, en: `${total} open position${total > 1 ? 's' : ''} available` });
+          document.getElementById('jobs-wrap').innerHTML = `<div class="jobs-grid">${posts.map(renderJob).join('')}</div>`;
+        }
+        renderPagination();
+        if (page > 1) window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch {
+        document.getElementById('jobs-wrap').innerHTML = `<div class="state-box"><div class="icon">⚠️</div><p>${vi({ vi: 'Không thể tải danh sách tuyển dụng.', en: 'Could not load job listings.' })}</p></div>`;
+      }
+    }
+
+    async function init() {
+      document.getElementById('jobs-wrap').innerHTML = skeleton();
+      try {
+        const cat = await STEC_WP.getCategoryBySlug(STEC_WP.categories.careers);
+        catId = cat.id;
+        await loadPage(1);
+      } catch {
+        document.getElementById('jobs-wrap').innerHTML = `<div class="state-box"><div class="icon">⚠️</div><p>Không thể kết nối WordPress API.</p></div>`;
+      }
+    }
+    init();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – Tuyển dụng | S-Tec</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body{background:var(--off-white)}
+    .admin-shell{min-height:100vh;display:grid;grid-template-rows:auto 1fr}
+    .admin-bar{background:var(--navy);padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .admin-bar-left{display:flex;align-items:center;gap:16px}
+    .admin-logo{font-size:.875rem;font-weight:800;color:var(--white);letter-spacing:.02em}
+    .admin-logo span{color:var(--blue-light)}
+    .admin-section-badge{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;background:rgba(22,163,74,.25);color:#4ade80;padding:4px 12px;border-radius:var(--r-full)}
+    .admin-bar-right{display:flex;align-items:center;gap:12px}
+    .admin-user{font-size:.8rem;color:rgba(255,255,255,.55)}
+    .admin-logout{font-size:.75rem;font-weight:700;color:rgba(255,255,255,.45);background:none;border:1px solid rgba(255,255,255,.15);padding:5px 14px;border-radius:var(--r-full);cursor:pointer;transition:var(--t)}
+    .admin-logout:hover{color:var(--white);border-color:rgba(255,255,255,.4)}
+    .switch-link{font-size:.75rem;font-weight:600;color:rgba(255,255,255,.5);transition:var(--t)}
+    .switch-link:hover{color:var(--white)}
+    .admin-content{padding:40px 32px;max-width:1200px;margin:0 auto;width:100%}
+    #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--navy);padding:24px}
+    .login-card{background:var(--white);border-radius:var(--r-xl);padding:48px;width:100%;max-width:440px;box-shadow:var(--shadow-lg)}
+    .login-card h2{margin-bottom:6px}
+    .login-card .subtitle{font-size:.875rem;color:var(--gray-400);margin-bottom:32px}
+    .login-hint{font-size:.8rem;color:var(--gray-400);margin-top:20px;padding:14px;background:var(--off-white);border-radius:var(--r-md);line-height:1.7}
+    .login-hint strong{color:var(--navy)}
+    .login-error{background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.2);color:#DC2626;font-size:.84rem;padding:12px 16px;border-radius:var(--r-md);margin-bottom:16px;display:none}
+    .admin-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+    .admin-toolbar h2{font-size:1.25rem;color:var(--navy)}
+    .post-count{font-size:.8rem;color:var(--gray-400);margin-top:2px}
+    .post-table{background:var(--white);border:1px solid var(--gray-100);border-radius:var(--r-lg);overflow:hidden}
+    .pt-head{display:grid;grid-template-columns:1fr 120px 110px 120px;gap:0;background:var(--off-white);border-bottom:1px solid var(--gray-100);padding:12px 24px;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--gray-400)}
+    .pt-row{display:grid;grid-template-columns:1fr 120px 110px 120px;gap:0;padding:18px 24px;border-bottom:1px solid var(--gray-100);align-items:center;transition:var(--t)}
+    .pt-row:last-child{border-bottom:none}
+    .pt-row:hover{background:var(--off-white)}
+    .pt-title{font-size:.9rem;font-weight:600;color:var(--navy);line-height:1.35}
+    .pt-title-sub{font-size:.75rem;color:var(--gray-400);margin-top:3px}
+    .pt-date{font-size:.8rem;color:var(--gray-600)}
+    .status-pill{display:inline-block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:4px 10px;border-radius:var(--r-full)}
+    .status-pill.publish{background:rgba(22,163,74,.1);color:#16A34A}
+    .status-pill.draft{background:rgba(245,158,11,.1);color:#D97706}
+    .status-pill.trash{background:rgba(220,38,38,.1);color:#DC2626}
+    .pt-actions{display:flex;gap:8px;justify-content:flex-end}
+    .act-btn{font-size:.75rem;font-weight:700;padding:6px 14px;border-radius:var(--r-full);border:1.5px solid var(--gray-200);background:var(--white);cursor:pointer;transition:var(--t);font-family:inherit}
+    .act-btn:hover{border-color:var(--navy);color:var(--navy)}
+    .act-btn.danger:hover{border-color:#DC2626;color:#DC2626}
+    .admin-pagination{display:flex;align-items:center;gap:6px;margin-top:20px}
+    .page-btn{width:36px;height:36px;border-radius:var(--r-md);border:1.5px solid var(--gray-200);background:var(--white);font-family:inherit;font-size:.84rem;font-weight:600;color:var(--gray-600);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--t)}
+    .page-btn:hover,.page-btn.active{background:var(--navy);color:var(--white);border-color:var(--navy)}
+    .page-btn:disabled{opacity:.35;cursor:not-allowed}
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(8,13,22,.65);z-index:500;align-items:center;justify-content:center;padding:24px}
+    .modal-overlay.open{display:flex}
+    .modal{background:var(--white);border-radius:var(--r-xl);width:100%;max-width:780px;max-height:92vh;overflow-y:auto;box-shadow:var(--shadow-lg)}
+    .modal-head{padding:28px 32px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--white);z-index:1;border-bottom:1px solid var(--gray-100)}
+    .modal-head h3{font-size:1.125rem}
+    .modal-close{width:36px;height:36px;border-radius:var(--r-md);border:1.5px solid var(--gray-200);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--gray-400);transition:var(--t)}
+    .modal-close:hover{background:var(--off-white);color:var(--navy)}
+    .modal-body{padding:28px 32px 32px}
+    .fg{margin-bottom:22px}
+    .fl{display:block;font-size:.8rem;font-weight:700;color:var(--navy);margin-bottom:8px;letter-spacing:.01em}
+    .fi{width:100%;padding:11px 14px;border:1.5px solid var(--gray-200);border-radius:var(--r-md);font-family:inherit;font-size:.9375rem;color:var(--navy);background:var(--off-white);outline:none;transition:var(--t)}
+    .fi:focus{border-color:var(--blue);background:var(--white)}
+    textarea.fi{resize:vertical;min-height:200px;line-height:1.7}
+    select.fi{cursor:pointer}
+    /* Job-specific extra fields */
+    .fields-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .job-meta-preview{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .jmp{font-size:.78rem;background:var(--off-white);padding:5px 10px;border-radius:var(--r-sm);color:var(--gray-600)}
+    .modal-foot{padding:20px 32px;border-top:1px solid var(--gray-100);display:flex;gap:10px;justify-content:flex-end;background:var(--off-white);border-radius:0 0 var(--r-xl) var(--r-xl)}
+    .btn-cancel{background:var(--white);color:var(--gray-600);border:1.5px solid var(--gray-200);padding:10px 22px;border-radius:var(--r-full);font-family:inherit;font-size:.875rem;font-weight:600;cursor:pointer;transition:var(--t)}
+    .btn-cancel:hover{border-color:var(--navy);color:var(--navy)}
+    .btn-save{background:var(--navy);color:var(--white);border:none;padding:10px 24px;border-radius:var(--r-full);font-family:inherit;font-size:.875rem;font-weight:700;cursor:pointer;transition:var(--t)}
+    .btn-save:hover{background:var(--blue)}
+    .btn-save:disabled{opacity:.5;cursor:not-allowed}
+    .confirm-overlay{display:none;position:fixed;inset:0;background:rgba(8,13,22,.65);z-index:600;align-items:center;justify-content:center;padding:24px}
+    .confirm-overlay.open{display:flex}
+    .confirm-box{background:var(--white);border-radius:var(--r-xl);padding:36px;max-width:420px;width:100%;text-align:center;box-shadow:var(--shadow-lg)}
+    .confirm-icon{font-size:2.5rem;margin-bottom:12px}
+    .confirm-box h3{margin-bottom:8px}
+    .confirm-box p{font-size:.9rem;color:var(--gray-600);margin-bottom:24px}
+    .confirm-actions{display:flex;gap:10px;justify-content:center}
+    .btn-confirm-delete{background:#DC2626;color:var(--white);border:none;padding:10px 24px;border-radius:var(--r-full);font-family:inherit;font-size:.875rem;font-weight:700;cursor:pointer;transition:var(--t)}
+    .btn-confirm-delete:hover{background:#B91C1C}
+    .toast{position:fixed;bottom:28px;right:28px;background:var(--navy);color:var(--white);padding:14px 20px;border-radius:var(--r-lg);font-size:.875rem;font-weight:600;box-shadow:var(--shadow-lg);transform:translateY(80px);opacity:0;transition:all .3s var(--ease);z-index:900;max-width:360px}
+    .toast.show{transform:translateY(0);opacity:1}
+    .toast.success::before{content:'✓ ';color:#4ade80}
+    .toast.error::before{content:'✕ ';color:#f87171}
+    .skel-row{padding:18px 24px;border-bottom:1px solid var(--gray-100)}
+    .skel-line{height:11px;border-radius:4px;background:linear-gradient(90deg,var(--gray-100) 25%,var(--gray-200) 50%,var(--gray-100) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;margin-bottom:8px}
+    .skel-line.s{width:40%}
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    @media(max-width:768px){.pt-head,.pt-row{grid-template-columns:1fr auto}.pt-date,.pt-status-col{display:none}.admin-content{padding:24px 16px}.admin-bar{padding:0 16px}.fields-row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN ─────────────────────────────── -->
+<div id="login-screen">
+  <div class="login-card">
+    <h2>Admin — Tuyển dụng</h2>
+    <p class="subtitle">S-Tec System Vina · Quản trị tin tuyển dụng</p>
+    <div class="login-error" id="login-error">Tên đăng nhập hoặc mật khẩu không đúng.</div>
+    <div class="fg">
+      <label class="fl">Tên đăng nhập WordPress</label>
+      <input class="fi" id="wp-user" type="text" placeholder="admin" autocomplete="username">
+    </div>
+    <div class="fg">
+      <label class="fl">Application Password</label>
+      <input class="fi" id="wp-pass" type="password" placeholder="xxxx xxxx xxxx xxxx xxxx xxxx" autocomplete="current-password">
+    </div>
+    <button class="btn btn-dark" style="width:100%;justify-content:center" id="login-btn" onclick="doLogin()">Đăng nhập →</button>
+    <div class="login-hint">
+      <strong>Cách lấy Application Password:</strong><br>
+      WP Admin → Users → Profile → cuộn xuống <em>Application Passwords</em> → đặt tên → nhấn <em>Add New</em> → sao chép mật khẩu hiển thị.
+    </div>
+  </div>
+</div>
+
+<!-- ── ADMIN SHELL ────────────────────────── -->
+<div class="admin-shell" id="admin-shell" style="display:none">
+  <div class="admin-bar">
+    <div class="admin-bar-left">
+      <div class="admin-logo">S-TEC <span>ADMIN</span></div>
+      <div class="admin-section-badge">Tuyển dụng</div>
+    </div>
+    <div class="admin-bar-right">
+      <a href="admin-news.html" class="switch-link">→ Tin tức</a>
+      <span class="admin-user" id="admin-username"></span>
+      <button class="admin-logout" onclick="doLogout()">Đăng xuất</button>
+    </div>
+  </div>
+
+  <div class="admin-content">
+    <div class="admin-toolbar">
+      <div>
+        <h2>Quản lý Tuyển dụng</h2>
+        <div class="post-count" id="post-count">Đang tải…</div>
+      </div>
+      <button class="btn btn-primary" onclick="openEditor(null)" style="font-size:.875rem">+ Tin tuyển dụng mới</button>
+    </div>
+
+    <div class="post-table" id="post-table">
+      <div class="pt-head"><div>Vị trí tuyển dụng</div><div>Ngày đăng</div><div>Trạng thái</div><div style="text-align:right">Thao tác</div></div>
+      <div id="posts-list"></div>
+    </div>
+    <div id="admin-pagination" class="admin-pagination"></div>
+  </div>
+</div>
+
+<!-- ── EDITOR MODAL ───────────────────────── -->
+<div class="modal-overlay" id="editor-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modal-title">Tin tuyển dụng mới</h3>
+      <button class="modal-close" onclick="closeEditor()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="fg">
+        <label class="fl">Tên vị trí tuyển dụng *</label>
+        <input class="fi" id="e-title" type="text" placeholder="Ví dụ: Nhân viên bảo vệ — Hà Nội">
+      </div>
+      <div class="fields-row">
+        <div class="fg">
+          <label class="fl">Địa điểm làm việc</label>
+          <input class="fi" id="e-location" type="text" placeholder="Hà Nội" value="Hà Nội">
+        </div>
+        <div class="fg">
+          <label class="fl">Hình thức làm việc</label>
+          <select class="fi" id="e-type">
+            <option value="Toàn thời gian">Toàn thời gian</option>
+            <option value="Bán thời gian">Bán thời gian</option>
+            <option value="Thực tập">Thực tập</option>
+            <option value="Hợp đồng">Hợp đồng</option>
+          </select>
+        </div>
+      </div>
+      <div class="fields-row">
+        <div class="fg">
+          <label class="fl">Mức lương (tùy chọn)</label>
+          <input class="fi" id="e-salary" type="text" placeholder="Ví dụ: 8–12 triệu VNĐ">
+        </div>
+        <div class="fg">
+          <label class="fl">Hạn nộp hồ sơ (tùy chọn)</label>
+          <input class="fi" id="e-deadline" type="date">
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Mô tả công việc & Yêu cầu *</label>
+        <textarea class="fi" id="e-content" placeholder="Mô tả chi tiết về vị trí, yêu cầu ứng viên và quyền lợi…"></textarea>
+      </div>
+      <div class="fg">
+        <label class="fl">Tóm tắt ngắn (hiển thị trên danh sách)</label>
+        <textarea class="fi" id="e-excerpt" style="min-height:80px" placeholder="1–2 câu tóm tắt ngắn về vị trí…"></textarea>
+      </div>
+      <div class="fg">
+        <label class="fl">Trạng thái</label>
+        <select class="fi" id="e-status">
+          <option value="publish">Đăng tin ngay</option>
+          <option value="draft">Lưu nháp</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeEditor()">Hủy</button>
+      <button class="btn-save" id="save-btn" onclick="savePost()">Đăng tin tuyển dụng</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── DELETE CONFIRM ─────────────────────── -->
+<div class="confirm-overlay" id="confirm-modal">
+  <div class="confirm-box">
+    <div class="confirm-icon">🗑️</div>
+    <h3>Xác nhận xóa?</h3>
+    <p>Tin tuyển dụng sẽ được chuyển vào thùng rác. Bạn có thể khôi phục trong WP Admin.</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" onclick="closeConfirm()">Hủy</button>
+      <button class="btn-confirm-delete" id="confirm-delete-btn">Xóa tin tuyển dụng</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="wp-api.js"></script>
+<script>
+  let catId=null, curPage=1, totPages=1, editingPostId=null, deleteTargetId=null;
+
+  // ─── Login ────────────────────────────────
+  async function doLogin() {
+    const user=document.getElementById('wp-user').value.trim();
+    const pass=document.getElementById('wp-pass').value.trim();
+    if(!user||!pass){showLoginError('Vui lòng nhập đầy đủ thông tin.');return;}
+    const btn=document.getElementById('login-btn');
+    btn.textContent='Đang xác thực…';btn.disabled=true;
+    const ok=await STEC_WP.verifyCredentials(user,pass);
+    if(ok){
+      STEC_WP.saveCredentials(user,pass);
+      document.getElementById('login-screen').style.display='none';
+      document.getElementById('admin-shell').style.display='grid';
+      document.getElementById('admin-username').textContent=user;
+      await initAdmin();
+    } else {
+      showLoginError('Tên đăng nhập hoặc Application Password không đúng.');
+      btn.textContent='Đăng nhập →';btn.disabled=false;
+    }
+  }
+  function showLoginError(msg){const el=document.getElementById('login-error');el.textContent=msg;el.style.display='block';}
+  function doLogout(){STEC_WP.clearCredentials();location.reload();}
+  document.getElementById('wp-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+
+  // ─── Init ─────────────────────────────────
+  async function initAdmin(){
+    try{
+      const cat=await STEC_WP.getCategoryBySlug(STEC_WP.categories.careers);
+      catId=cat.id;
+      await loadPage(1);
+    }catch{toast('Không thể kết nối API.','error');}
+  }
+
+  // ─── Load posts ───────────────────────────
+  const skeleton=()=>Array(4).fill(`<div class="skel-row"><div class="skel-line s"></div><div class="skel-line"></div></div>`).join('');
+
+  async function loadPage(page){
+    curPage=page;
+    document.getElementById('posts-list').innerHTML=skeleton();
+    const {posts,totalPages:tp,total}=await STEC_WP.getPosts(catId,page,10);
+    totPages=tp;
+    document.getElementById('post-count').textContent=`${total} tin tuyển dụng · Trang ${page}/${tp}`;
+    if(!posts.length){
+      document.getElementById('posts-list').innerHTML='<div style="padding:32px;text-align:center;color:var(--gray-400)">Chưa có tin tuyển dụng nào.</div>';
+    }else{
+      document.getElementById('posts-list').innerHTML=posts.map(renderRow).join('');
+    }
+    renderPagination();
+  }
+
+  function renderRow(p){
+    const label={publish:'Đang tuyển',draft:'Nháp',trash:'Đã xóa'}[p.status]||p.status;
+    return `<div class="pt-row">
+      <div>
+        <div class="pt-title">${p.title.rendered}</div>
+        <div class="pt-title-sub">${STEC_WP.stripHtml(p.excerpt.rendered).slice(0,80)}…</div>
+      </div>
+      <div class="pt-date">${STEC_WP.formatDate(p.date)}</div>
+      <div><span class="status-pill ${p.status}">${label}</span></div>
+      <div class="pt-actions">
+        <button class="act-btn" onclick="openEditor(${p.id})">✏️ Sửa</button>
+        <button class="act-btn danger" onclick="openConfirm(${p.id})">🗑️</button>
+      </div>
+    </div>`;
+  }
+
+  function renderPagination(){
+    const el=document.getElementById('admin-pagination');
+    if(totPages<=1){el.innerHTML='';return;}
+    let h=`<button class="page-btn" onclick="loadPage(${curPage-1})" ${curPage===1?'disabled':''}>‹</button>`;
+    for(let i=1;i<=totPages;i++) h+=`<button class="page-btn ${i===curPage?'active':''}" onclick="loadPage(${i})">${i}</button>`;
+    h+=`<button class="page-btn" onclick="loadPage(${curPage+1})" ${curPage===totPages?'disabled':''}>›</button>`;
+    el.innerHTML=h;
+  }
+
+  // ─── Editor ───────────────────────────────
+  // Job meta is stored in post content as a comment block: <!--meta:key=value-->
+  function packMeta(content, location, type, salary, deadline) {
+    const meta = `<!--job-location:${location}|job-type:${type}|job-salary:${salary}|job-deadline:${deadline}-->`;
+    return meta + '\n' + content;
+  }
+  function unpackMeta(raw) {
+    const match = raw.match(/<!--job-location:([^|]*)\|job-type:([^|]*)\|job-salary:([^|]*)\|job-deadline:([^-]*)-->/);
+    return match ? { location:match[1], type:match[2], salary:match[3], deadline:match[4] } : { location:'Hà Nội', type:'Toàn thời gian', salary:'', deadline:'' };
+  }
+
+  async function openEditor(postId){
+    editingPostId=postId;
+    document.getElementById('modal-title').textContent=postId?'Chỉnh sửa tin tuyển dụng':'Tin tuyển dụng mới';
+    ['e-title','e-content','e-excerpt','e-salary','e-deadline'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('e-location').value='Hà Nội';
+    document.getElementById('e-type').value='Toàn thời gian';
+    document.getElementById('e-status').value='publish';
+
+    if(postId){
+      document.getElementById('save-btn').textContent='Đang tải…';
+      document.getElementById('save-btn').disabled=true;
+      try{
+        const post=await STEC_WP.getPost(postId);
+        document.getElementById('e-title').value=post.title.rendered;
+        document.getElementById('e-excerpt').value=STEC_WP.stripHtml(post.excerpt.rendered);
+        document.getElementById('e-status').value=post.status;
+        const rawContent=post.content.rendered.replace(/<[^>]+>/g,'');
+        const meta=unpackMeta(rawContent);
+        document.getElementById('e-location').value=meta.location;
+        document.getElementById('e-type').value=meta.type;
+        document.getElementById('e-salary').value=meta.salary;
+        document.getElementById('e-deadline').value=meta.deadline;
+        document.getElementById('e-content').value=rawContent.replace(/<!--job-[^>]+-->\n?/,'');
+      }catch{toast('Không thể tải bài viết.','error');return;}
+      document.getElementById('save-btn').textContent='Lưu thay đổi';
+      document.getElementById('save-btn').disabled=false;
+    } else {
+      document.getElementById('save-btn').textContent='Đăng tin tuyển dụng';
+      document.getElementById('save-btn').disabled=false;
+    }
+    document.getElementById('editor-modal').classList.add('open');
+  }
+
+  function closeEditor(){document.getElementById('editor-modal').classList.remove('open');}
+
+  async function savePost(){
+    const title=document.getElementById('e-title').value.trim();
+    const rawContent=document.getElementById('e-content').value.trim();
+    const excerpt=document.getElementById('e-excerpt').value.trim();
+    const status=document.getElementById('e-status').value;
+    const location=document.getElementById('e-location').value.trim()||'Hà Nội';
+    const type=document.getElementById('e-type').value;
+    const salary=document.getElementById('e-salary').value.trim();
+    const deadline=document.getElementById('e-deadline').value;
+    if(!title||!rawContent){toast('Tên vị trí và mô tả không được để trống.','error');return;}
+    const content=packMeta(rawContent,location,type,salary,deadline);
+    const btn=document.getElementById('save-btn');
+    btn.textContent='Đang lưu…';btn.disabled=true;
+    try{
+      if(editingPostId){
+        await STEC_WP.updatePost(editingPostId,{title,content,excerpt,status});
+        toast('Tin tuyển dụng đã được cập nhật.','success');
+      }else{
+        await STEC_WP.createPost({title,content,excerpt,status,categoryId:catId});
+        toast('Tin tuyển dụng đã được đăng.','success');
+      }
+      closeEditor();
+      await loadPage(curPage);
+    }catch(e){toast(e.message||'Có lỗi xảy ra.','error');}
+    btn.textContent=editingPostId?'Lưu thay đổi':'Đăng tin tuyển dụng';
+    btn.disabled=false;
+  }
+
+  // ─── Delete ───────────────────────────────
+  function openConfirm(id){
+    deleteTargetId=id;
+    document.getElementById('confirm-modal').classList.add('open');
+    document.getElementById('confirm-delete-btn').onclick=async()=>{
+      try{
+        await STEC_WP.deletePost(deleteTargetId,false);
+        toast('Tin tuyển dụng đã được chuyển vào thùng rác.','success');
+        closeConfirm();
+        await loadPage(curPage);
+      }catch(e){toast(e.message||'Không thể xóa.','error');}
+    };
+  }
+  function closeConfirm(){document.getElementById('confirm-modal').classList.remove('open');}
+
+  // ─── Toast ────────────────────────────────
+  let toastTimer;
+  function toast(msg,type='success'){
+    const el=document.getElementById('toast');
+    el.textContent=msg;el.className=`toast ${type} show`;
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>el.classList.remove('show'),4000);
+  }
+
+  // ─── Auto-login ───────────────────────────
+  if(STEC_WP.isLoggedIn()){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('admin-shell').style.display='grid';
+    document.getElementById('admin-username').textContent=localStorage.getItem(STEC_WP.storageKeys.username);
+    initAdmin();
+  }
+
+  document.getElementById('editor-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeEditor();});
+  document.getElementById('confirm-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeConfirm();});
+</script>
+</body>
+</html>

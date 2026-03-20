@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S-Tec System Vina – Vì một thế giới an toàn hơn</title>
+  <meta name="description"
+    content="S-Tec System Vina – Giải pháp toàn diện về an ninh, vệ sinh, quản lý cơ sở vật chất và hơn thế nữa.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- ── NAVBAR ─────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="navbar-inner">
+        <a href="index.html" class="logo">
+          <!-- Replace src with your actual logo -->
+          <div
+            style="width:38px;height:38px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:.8rem;flex-shrink:0">
+            ST</div>
+          <div class="logo-text">S-TEC<br><span>SYSTEM VINA</span></div>
+        </a>
+
+        <nav class="nav-links">
+          <a href="index.html" class="active" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+          <a href="about.html" data-vi="Giới thiệu" data-en="About">Giới thiệu</a>
+          <a href="#services" data-vi="Dịch vụ" data-en="Services">Dịch vụ</a>
+          <a href="security.html" data-vi="An ninh" data-en="Security">An ninh</a>
+          <a href="news.html" data-vi="Tin tức" data-en="News">Tin tức</a>
+          <a href="careers.html" data-vi="Tuyển dụng" data-en="Careers">Tuyển dụng</a>
+          <a href="#contact" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+        </nav>
+
+        <div class="nav-right">
+          <div class="lang-toggle">
+            <button class="lang-btn active" onclick="setLang('vi')">VI</button>
+            <button class="lang-btn" onclick="setLang('en')">EN</button>
+          </div>
+          <a href="#contact" class="nav-links nav-cta btn" data-vi="Liên hệ ngay" data-en="Contact Us">Liên hệ ngay</a>
+        </div>
+
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+    <a href="about.html" data-vi="Giới thiệu công ty" data-en="About Us">Giới thiệu công ty</a>
+    <a href="#services" data-vi="Dịch vụ" data-en="Services">Dịch vụ</a>
+    <a href="security.html" data-vi="An ninh bảo vệ" data-en="Security">An ninh bảo vệ</a>
+    <a href="#contact" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+    <div class="mobile-lang">
+      <button class="lang-btn active" onclick="setLang('vi')">VI</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <!-- ── HERO ────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span>✦</span>
+          <span data-vi="S-Tec System Vina — Hà Nội, Việt Nam" data-en="S-Tec System Vina — Hanoi, Vietnam">S-Tec System
+            Vina — Hà Nội, Việt Nam</span>
+        </div>
+
+        <h1>
+          <span data-vi="Vì một thế giới" data-en="Building a world">Vì một thế giới</span><br>
+          <span class="accent" data-vi="an toàn hơn." data-en="that's safer.">an toàn hơn.</span>
+        </h1>
+
+        <p class="hero-sub"
+          data-vi="Chúng tôi cung cấp giải pháp toàn diện từ an ninh bảo vệ, vệ sinh môi trường đến quản lý cơ sở vật chất — giúp doanh nghiệp của bạn vận hành an toàn và hiệu quả."
+          data-en="We deliver comprehensive solutions spanning security, cleaning, facility management, and more — keeping your business safe and running at its best.">
+          Chúng tôi cung cấp giải pháp toàn diện từ an ninh bảo vệ, vệ sinh môi trường đến quản lý cơ sở vật chất — giúp
+          doanh nghiệp của bạn vận hành an toàn và hiệu quả.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#services" class="btn btn-primary">
+            <span data-vi="Khám phá dịch vụ" data-en="Explore Services">Khám phá dịch vụ</span>
+            <span>→</span>
+          </a>
+          <a href="about.html" class="btn btn-outline-white">
+            <span data-vi="Về chúng tôi" data-en="About Us">Về chúng tôi</span>
+          </a>
+        </div>
+
+        <div class="hero-divider"></div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="number">15+</div>
+            <div class="label" data-vi="Năm kinh nghiệm" data-en="Years Experience">Năm kinh nghiệm</div>
+          </div>
+          <div class="stat-item">
+            <div class="number">500+</div>
+            <div class="label" data-vi="Khách hàng tin dùng" data-en="Trusted Clients">Khách hàng tin dùng</div>
+          </div>
+          <div class="stat-item">
+            <div class="number">9</div>
+            <div class="label" data-vi="Lĩnh vực dịch vụ" data-en="Service Sectors">Lĩnh vực dịch vụ</div>
+          </div>
+          <div class="stat-item">
+            <div class="number">24/7</div>
+            <div class="label" data-vi="Hỗ trợ liên tục" data-en="Round-the-clock Support">Hỗ trợ liên tục</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ────────────────────────────── -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header center fade-up">
+        <span class="section-label" data-vi="Lĩnh vực kinh doanh" data-en="What We Do">Lĩnh vực kinh doanh</span>
+        <h2 data-vi="Giải pháp toàn diện cho doanh nghiệp" data-en="Comprehensive Business Solutions">Giải pháp toàn
+          diện cho doanh nghiệp</h2>
+        <p data-vi="Từ bảo vệ an ninh đến quản lý vận hành, chúng tôi đồng hành cùng doanh nghiệp ở mọi lĩnh vực."
+          data-en="From security to facility operations, we are your trusted partner across every business domain.">
+          Từ bảo vệ an ninh đến quản lý vận hành, chúng tôi đồng hành cùng doanh nghiệp ở mọi lĩnh vực.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <a href="security.html" class="service-card fade-up">
+          <div class="service-icon">🛡️</div>
+          <h4 data-vi="An ninh bảo vệ" data-en="Security Services">An ninh bảo vệ</h4>
+          <p data-vi="Đội ngũ bảo vệ chuyên nghiệp, được huấn luyện bài bản, bảo vệ an toàn tài sản và tính mạng của quý khách."
+            data-en="Professional, rigorously trained security personnel safeguarding your life and assets around the clock.">
+            Đội ngũ bảo vệ chuyên nghiệp, được huấn luyện bài bản, bảo vệ an toàn tài sản và tính mạng của quý khách.
+          </p>
+          <div class="service-link"><span data-vi="Xem thêm" data-en="Learn more">Xem thêm</span> →</div>
+        </a>
+
+        <div class="service-card fade-up">
+          <div class="service-icon">🌿</div>
+          <h4 data-vi="Kiểm soát côn trùng gây hại" data-en="Pest Control">Kiểm soát côn trùng gây hại</h4>
+          <p data-vi="Giải pháp kiểm soát côn trùng toàn diện, giúp không gian sống và làm việc của bạn luôn an toàn, tiện nghi."
+            data-en="Comprehensive pest management solutions keeping your living and working spaces safe and comfortable.">
+            Giải pháp kiểm soát côn trùng toàn diện, giúp không gian sống và làm việc của bạn luôn an toàn, tiện nghi.
+          </p>
+          <div class="service-link"><span data-vi="Xem thêm" data-en="Learn more">Xem thêm</span> →</div>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon">🏢</div>
+          <h4 data-vi="Quản lý cơ sở vật chất" data-en="Facility Management">Quản lý cơ sở vật chất</h4>
+          <p data-vi="Các chuyên gia vận hành và bảo trì cơ sở vật chất, đảm bảo môi trường làm việc an toàn và thoải mái."
+            data-en="Expert operation and maintenance of your facilities, ensuring a safe and comfortable work environment.">
+            Các chuyên gia vận hành và bảo trì cơ sở vật chất, đảm bảo môi trường làm việc an toàn và thoải mái.
+          </p>
+          <div class="service-link"><span data-vi="Xem thêm" data-en="Learn more">Xem thêm</span> →</div>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon">✨</div>
+          <h4 data-vi="Vệ sinh / Môi trường" data-en="Cleaning & Environment">Vệ sinh / Môi trường</h4>
+          <p data-vi="Dịch vụ làm sạch chuyên nghiệp, tạo môi trường sạch sẽ và an toàn, nâng cao hiệu quả kinh doanh."
+            data-en="Professional cleaning services creating a hygienic, safe environment that enhances business performance.">
+            Dịch vụ làm sạch chuyên nghiệp, tạo môi trường sạch sẽ và an toàn, nâng cao hiệu quả kinh doanh.
+          </p>
+          <div class="service-link"><span data-vi="Xem thêm" data-en="Learn more">Xem thêm</span> →</div>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon">🏨</div>
+          <h4 data-vi="Dịch vụ Resort / Khách sạn" data-en="Resort & Hotel Services">Dịch vụ Resort / Khách sạn</h4>
+          <p data-vi="Cung cấp dịch vụ tổng hợp toàn diện nhằm mang lại sự thư giãn và thoải mái tối đa cho khách hàng."
+            data-en="Comprehensive hospitality services designed to deliver maximum comfort and relaxation for your guests.">
+            Cung cấp dịch vụ tổng hợp toàn diện nhằm mang lại sự thư giãn và thoải mái tối đa cho khách hàng.
+          </p>
+          <div class="service-link"><span data-vi="Xem thêm" data-en="Learn more">Xem thêm</span> →</div>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon">⚙️</div>
+          <h4 data-vi="Tích hợp hệ thống (SI)" data-en="System Integration (SI)">Tích hợp hệ thống (SI)</h4>
+          <p data-vi="Công nghệ tích hợp giữa con người và thiết bị máy móc, hướng tới một tương lai an toàn và hiệu quả hơn."
+            data-en="Integrating human expertise with smart technology, building a safer and more efficient future.">
+            Công nghệ tích hợp giữa con người và thiết bị máy móc, hướng tới một tương lai an toàn và hiệu quả hơn.
+          </p>
+          <div class="service-link"><span data-vi="Xem thêm" data-en="Learn more">Xem thêm</span> →</div>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon">👥</div>
+          <h4>Total Outsourcing</h4>
+          <p data-vi="Hoàn thiện hiệu quả công việc của khách hàng thông qua tuyển chọn nghiêm ngặt nhân sự tiềm năng."
+            data-en="Optimising your business operations through rigorous selection of skilled, high-potential personnel.">
+            Hoàn thiện hiệu quả công việc của khách hàng thông qua tuyển chọn nghiêm ngặt nhân sự tiềm năng.
+          </p>
+          <div class="service-link"><span data-vi="Xem thêm" data-en="Learn more">Xem thêm</span> →</div>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon">🔥</div>
+          <h4 data-vi="Phòng cháy chữa cháy" data-en="Fire Prevention">Phòng cháy chữa cháy</h4>
+          <p data-vi="Bảo vệ tài sản, tính mạng và môi trường sống của khách hàng khỏi nguy cơ hỏa hoạn một cách chủ động."
+            data-en="Proactively protecting your assets, life, and environment from the risk of fire hazards.">
+            Bảo vệ tài sản, tính mạng và môi trường sống của khách hàng khỏi nguy cơ hỏa hoạn một cách chủ động.
+          </p>
+          <div class="service-link"><span data-vi="Xem thêm" data-en="Learn more">Xem thêm</span> →</div>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon">🔒</div>
+          <h4 data-vi="Tiêu hủy tài liệu mật" data-en="Secure Document Destruction">Tiêu hủy tài liệu mật</h4>
+          <p data-vi="Bảo mật thông tin là ưu tiên hàng đầu. Chúng tôi tiêu hủy tài liệu mật an toàn, triệt để và đáng tin cậy."
+            data-en="Information security is our top priority. We destroy confidential documents safely, thoroughly, and reliably.">
+            Bảo mật thông tin là ưu tiên hàng đầu. Chúng tôi tiêu hủy tài liệu mật an toàn, triệt để và đáng tin cậy.
+          </p>
+          <div class="service-link"><span data-vi="Xem thêm" data-en="Learn more">Xem thêm</span> →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT TEASER ────────────────────────── -->
+  <section class="about-teaser">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual fade-up">
+          <!-- Replace this with an actual company photo -->
+          <div class="about-placeholder">
+            <div class="big">🏢</div>
+            <div data-vi="Ảnh công ty — thay thế bằng ảnh thực tế" data-en="Company photo — replace with actual image">
+              Ảnh công ty — thay thế bằng ảnh thực tế</div>
+          </div>
+          <div class="about-badge-card">
+            <div class="num">2009</div>
+            <div class="lbl" data-vi="Thành lập" data-en="Founded">Thành lập</div>
+          </div>
+        </div>
+
+        <div class="about-text fade-up">
+          <div class="section-header">
+            <span class="section-label" data-vi="Về chúng tôi" data-en="About Us">Về chúng tôi</span>
+            <h2 data-vi="Đối tác tin cậy của hàng trăm doanh nghiệp"
+              data-en="Trusted Partner to Hundreds of Businesses">Đối tác tin cậy của hàng trăm doanh nghiệp</h2>
+            <p data-vi="S-Tec System Vina là công ty cổ phần hoạt động đa lĩnh vực, với hơn 15 năm kinh nghiệm trong việc cung cấp các giải pháp quản lý và dịch vụ toàn diện cho doanh nghiệp tại Việt Nam."
+              data-en="S-Tec System Vina is a multi-sector joint-stock company with over 15 years of experience delivering comprehensive management solutions and services to businesses across Vietnam.">
+              S-Tec System Vina là công ty cổ phần hoạt động đa lĩnh vực, với hơn 15 năm kinh nghiệm trong việc cung cấp
+              các giải pháp quản lý và dịch vụ toàn diện cho doanh nghiệp tại Việt Nam.
+            </p>
+          </div>
+
+          <div class="about-features">
+            <div class="about-feature">
+              <div class="feature-dot"></div>
+              <p data-vi="Đội ngũ nhân sự được đào tạo bài bản, chuyên nghiệp trong từng lĩnh vực"
+                data-en="Highly trained, specialist teams across every service sector">Đội ngũ nhân sự được đào tạo bài
+                bản, chuyên nghiệp trong từng lĩnh vực</p>
+            </div>
+            <div class="about-feature">
+              <div class="feature-dot"></div>
+              <p data-vi="Cam kết chất lượng dịch vụ và sự hài lòng tuyệt đối của khách hàng"
+                data-en="Committed to service quality and absolute customer satisfaction">Cam kết chất lượng dịch vụ và
+                sự hài lòng tuyệt đối của khách hàng</p>
+            </div>
+            <div class="about-feature">
+              <div class="feature-dot"></div>
+              <p data-vi="Mạng lưới dịch vụ rộng khắp, sẵn sàng phục vụ quý khách ở mọi nơi"
+                data-en="Wide service network, ready to serve clients wherever they are">Mạng lưới dịch vụ rộng khắp,
+                sẵn sàng phục vụ quý khách ở mọi nơi</p>
+            </div>
+            <div class="about-feature">
+              <div class="feature-dot"></div>
+              <p data-vi="Thành viên của mạng lưới S-Tec quốc tế, kế thừa công nghệ và kinh nghiệm toàn cầu"
+                data-en="Member of the international S-Tec network, inheriting global technology and expertise">Thành
+                viên của mạng lưới S-Tec quốc tế, kế thừa công nghệ và kinh nghiệm toàn cầu</p>
+            </div>
+          </div>
+
+          <a href="about.html" class="btn btn-dark">
+            <span data-vi="Tìm hiểu thêm" data-en="Learn More">Tìm hiểu thêm</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SUBSIDIARY — S-TEC SECURITY ─────────── -->
+  <section class="subsidiary">
+    <div class="container">
+      <div class="subsidiary-grid">
+        <div>
+          <div class="section-header">
+            <span class="section-label" data-vi="Công ty thành viên" data-en="Our Subsidiary">Công ty thành viên</span>
+            <h2>S-Tec Security</h2>
+            <p data-vi="Giải pháp an ninh chuyên sâu — từ nhân lực bảo vệ, đào tạo nhân sự đến trung tâm giám sát hiện đại, hoạt động 24/7."
+              data-en="Specialised security solutions — from security manpower and personnel training to a state-of-the-art 24/7 monitoring centre.">
+              Giải pháp an ninh chuyên sâu — từ nhân lực bảo vệ, đào tạo nhân sự đến trung tâm giám sát hiện đại, hoạt
+              động 24/7.
+            </p>
+          </div>
+
+          <div class="sub-features">
+            <div class="sub-feature">
+              <div class="sub-feature-icon">👮</div>
+              <h4 data-vi="Nhân lực bảo vệ" data-en="Security Manpower">Nhân lực bảo vệ</h4>
+              <p data-vi="Nhân viên bảo vệ được tuyển chọn kỹ lưỡng và huấn luyện chuyên nghiệp"
+                data-en="Carefully selected and professionally trained security officers">Nhân viên bảo vệ được tuyển
+                chọn kỹ lưỡng và huấn luyện chuyên nghiệp</p>
+            </div>
+            <div class="sub-feature">
+              <div class="sub-feature-icon">🎓</div>
+              <h4 data-vi="Đào tạo nhân sự" data-en="Personnel Training">Đào tạo nhân sự</h4>
+              <p data-vi="Chương trình đào tạo bài bản đạt tiêu chuẩn quốc tế"
+                data-en="Rigorous training programmes meeting international standards">Chương trình đào tạo bài bản đạt
+                tiêu chuẩn quốc tế</p>
+            </div>
+            <div class="sub-feature">
+              <div class="sub-feature-icon">📹</div>
+              <h4 data-vi="Trung tâm giám sát" data-en="Monitoring Centre">Trung tâm giám sát</h4>
+              <p data-vi="Hệ thống giám sát tập trung, theo dõi 24/7 với công nghệ hiện đại"
+                data-en="Centralised monitoring system, 24/7 surveillance with cutting-edge technology">Hệ thống giám
+                sát tập trung, theo dõi 24/7 với công nghệ hiện đại</p>
+            </div>
+            <div class="sub-feature">
+              <div class="sub-feature-icon">🔐</div>
+              <h4 data-vi="Giải pháp tích hợp" data-en="Integrated Solutions">Giải pháp tích hợp</h4>
+              <p data-vi="Kết hợp con người và công nghệ để tối ưu hóa hiệu quả an ninh"
+                data-en="Combining human expertise and technology to maximise security effectiveness">Kết hợp con người
+                và công nghệ để tối ưu hóa hiệu quả an ninh</p>
+            </div>
+          </div>
+
+          <a href="security.html" class="sub-link">
+            <span data-vi="Khám phá S-Tec Security" data-en="Explore S-Tec Security">Khám phá S-Tec Security</span>
+            <span>→</span>
+          </a>
+        </div>
+
+        <div class="sub-visual fade-up">
+          <div class="sub-stat-card">
+            <div class="sub-stat-num">24/7</div>
+            <div class="sub-stat-desc" data-vi="Trung tâm giám sát hoạt động liên tục, không gián đoạn"
+              data-en="Monitoring centre operating continuously without interruption">Trung tâm giám sát hoạt động liên
+              tục, không gián đoạn</div>
+          </div>
+          <div class="sub-stat-card">
+            <div class="sub-stat-num">200+</div>
+            <div class="sub-stat-desc" data-vi="Nhân viên an ninh được đào tạo và triển khai toàn quốc"
+              data-en="Security officers trained and deployed nationwide">Nhân viên an ninh được đào tạo và triển khai
+              toàn quốc</div>
+          </div>
+          <div class="sub-stat-card">
+            <div class="sub-stat-num">100+</div>
+            <div class="sub-stat-desc" data-vi="Công trình và cơ sở đang được bảo vệ trên cả nước"
+              data-en="Properties and facilities currently under protection nationwide">Công trình và cơ sở đang được
+              bảo vệ trên cả nước</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ─────────────────────────────── -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label" data-vi="Liên hệ" data-en="Get in Touch">Liên hệ</span>
+        <h2 data-vi="Hãy để chúng tôi đồng hành cùng bạn" data-en="Let us walk alongside you">Hãy để chúng tôi đồng hành
+          cùng bạn</h2>
+        <p data-vi="Đội ngũ của chúng tôi luôn sẵn sàng tư vấn và hỗ trợ mọi nhu cầu của quý khách."
+          data-en="Our team is always ready to advise and support all your needs.">Đội ngũ của chúng tôi luôn sẵn sàng
+          tư vấn và hỗ trợ mọi nhu cầu của quý khách.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div>
+          <div class="contact-items">
+            <div class="contact-item">
+              <div class="ci-icon">📍</div>
+              <div>
+                <div class="ci-label" data-vi="Địa chỉ" data-en="Address">Địa chỉ</div>
+                <div class="ci-value">Tầng 3, 210 Hoàng Quốc Việt, Nghĩa Đô, Hà Nội</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="ci-icon">📞</div>
+              <div>
+                <div class="ci-label" data-vi="Điện thoại" data-en="Phone">Điện thoại</div>
+                <div class="ci-value"><a href="tel:0984474730">0984 474 730</a></div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="ci-icon">✉️</div>
+              <div>
+                <div class="ci-label">Email</div>
+                <div class="ci-value"><a href="mailto:info@stecsystem.com.vn">info@stecsystem.com.vn</a></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-row">
+            <a href="https://www.facebook.com/profile.php?id=61586039314490" class="social-btn" target="_blank"
+              title="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+              </svg>
+            </a>
+            <a href="https://www.youtube.com/@STECSYSTEMVINA" class="social-btn" target="_blank" title="YouTube">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" />
+                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="https://zalo.me/0984474730" class="social-btn" target="_blank" title="Zalo">
+              <span style="font-size:11px;font-weight:800;color:currentColor">Zalo</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-form-card fade-up">
+          <h3 data-vi="Gửi tin nhắn cho chúng tôi" data-en="Send Us a Message">Gửi tin nhắn cho chúng tôi</h3>
+          <div class="fg">
+            <label class="fl" data-vi="Họ và tên" data-en="Full Name">Họ và tên</label>
+            <input class="fi" type="text" placeholder="Nguyễn Văn A">
+          </div>
+          <div class="fg">
+            <label class="fl" data-vi="Email hoặc số điện thoại" data-en="Email or Phone">Email hoặc số điện
+              thoại</label>
+            <input class="fi" type="text" placeholder="email@example.com">
+          </div>
+          <div class="fg">
+            <label class="fl" data-vi="Dịch vụ quan tâm" data-en="Service of Interest">Dịch vụ quan tâm</label>
+            <select class="fi">
+              <option data-vi="Chọn dịch vụ..." data-en="Select a service...">Chọn dịch vụ...</option>
+              <option data-vi="An ninh bảo vệ" data-en="Security Services">An ninh bảo vệ</option>
+              <option data-vi="Kiểm soát côn trùng" data-en="Pest Control">Kiểm soát côn trùng</option>
+              <option data-vi="Quản lý cơ sở vật chất" data-en="Facility Management">Quản lý cơ sở vật chất</option>
+              <option data-vi="Dịch vụ khác" data-en="Other Services">Dịch vụ khác</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label class="fl" data-vi="Nội dung" data-en="Message">Nội dung</label>
+            <textarea class="fi" placeholder="Nội dung liên hệ của bạn..."></textarea>
+          </div>
+          <button class="submit-btn" data-vi="Gửi tin nhắn →" data-en="Send Message →">Gửi tin nhắn →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ──────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo-text">S-TEC <span>SYSTEM VINA</span></span>
+          <p data-vi="Công ty Cổ phần S-Tec System Vina — Đối tác dịch vụ toàn diện, đáng tin cậy của hàng trăm doanh nghiệp tại Việt Nam và khu vực."
+            data-en="S-Tec System Vina Joint Stock Company — The trusted, comprehensive service partner for hundreds of businesses across Vietnam and the region.">
+            Công ty Cổ phần S-Tec System Vina — Đối tác dịch vụ toàn diện, đáng tin cậy của hàng trăm doanh nghiệp tại
+            Việt Nam và khu vực.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5 data-vi="Công ty" data-en="Company">Công ty</h5>
+          <ul>
+            <li><a href="about.html" data-vi="Giới thiệu" data-en="About Us">Giới thiệu</a></li>
+            <li><a href="about.html#leadership" data-vi="Lãnh đạo" data-en="Leadership">Lãnh đạo</a></li>
+            <li><a href="about.html#network" data-vi="S-Tec Network" data-en="S-Tec Network">S-Tec Network</a></li>
+            <li><a href="#" data-vi="Tuyển dụng" data-en="Careers">Tuyển dụng</a></li>
+            <li><a href="#" data-vi="Tin tức" data-en="News">Tin tức</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5 data-vi="Dịch vụ" data-en="Services">Dịch vụ</h5>
+          <ul>
+            <li><a href="security.html" data-vi="An ninh bảo vệ" data-en="Security">An ninh bảo vệ</a></li>
+            <li><a href="#" data-vi="Kiểm soát côn trùng" data-en="Pest Control">Kiểm soát côn trùng</a></li>
+            <li><a href="#" data-vi="Quản lý cơ sở vật chất" data-en="Facility Management">Quản lý cơ sở vật chất</a>
+            </li>
+            <li><a href="#" data-vi="Vệ sinh môi trường" data-en="Cleaning">Vệ sinh môi trường</a></li>
+            <li><a href="#" data-vi="Phòng cháy chữa cháy" data-en="Fire Prevention">Phòng cháy chữa cháy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <span>Copyright 2026 © S-Tec System Vina</span>
+        <!-- <span data-vi="Được thiết kế với ♥ tại Hà Nội" data-en="Designed with ♥ in Hanoi">Được thiết kế với ♥ tại Hà Nội</span> -->
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Language switcher
+    let currentLang = 'vi';
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.querySelectorAll('[data-vi]').forEach(el => {
+        el.textContent = el.dataset[lang] || el.dataset.vi;
+      });
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll(`.lang-btn`).forEach(btn => {
+        if ((btn.textContent === 'VI' && lang === 'vi') || (btn.textContent === 'EN' && lang === 'en')) {
+          btn.classList.add('active');
+        }
+      });
+      document.documentElement.lang = lang === 'vi' ? 'vi' : 'en';
+    }
+
+    // ── Navbar scroll
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // ── Mobile menu
+    function toggleMenu() {
+      document.getElementById('mobileNav').classList.toggle('open');
+    }
+
+    // ── Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Close mobile nav on link click
+    document.querySelectorAll('.mobile-nav a').forEach(link => {
+      link.addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+    });
+  </script>
+</body>
+
+</html>

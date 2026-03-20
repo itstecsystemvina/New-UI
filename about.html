@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giới thiệu – S-Tec System Vina</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- ── NAVBAR ─────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="navbar-inner">
+        <a href="index.html" class="logo">
+          <div
+            style="width:38px;height:38px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:.8rem;flex-shrink:0">
+            ST</div>
+          <div class="logo-text">S-TEC<br><span>SYSTEM VINA</span></div>
+        </a>
+        <nav class="nav-links">
+          <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+          <a href="about.html" class="active" data-vi="Giới thiệu" data-en="About">Giới thiệu</a>
+          <a href="index.html#services" data-vi="Dịch vụ" data-en="Services">Dịch vụ</a>
+          <a href="security.html" data-vi="An ninh" data-en="Security">An ninh</a>
+          <a href="news.html" data-vi="Tin tức" data-en="News">Tin tức</a>
+          <a href="careers.html" data-vi="Tuyển dụng" data-en="Careers">Tuyển dụng</a>
+          <a href="index.html#contact" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+        </nav>
+        <div class="nav-right">
+          <div class="lang-toggle">
+            <button class="lang-btn active" onclick="setLang('vi')">VI</button>
+            <button class="lang-btn" onclick="setLang('en')">EN</button>
+          </div>
+          <a href="index.html#contact" class="nav-links nav-cta btn" data-vi="Liên hệ ngay" data-en="Contact Us">Liên hệ
+            ngay</a>
+        </div>
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+    <a href="about.html" data-vi="Giới thiệu công ty" data-en="About Us">Giới thiệu công ty</a>
+    <a href="index.html#services" data-vi="Dịch vụ" data-en="Services">Dịch vụ</a>
+    <a href="security.html" data-vi="An ninh bảo vệ" data-en="Security">An ninh bảo vệ</a>
+    <a href="index.html#contact" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+    <div class="mobile-lang">
+      <button class="lang-btn active" onclick="setLang('vi')">VI</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <!-- ── PAGE HERO ─────────────────────────────── -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+        <span class="bc-sep">/</span>
+        <span class="bc-cur" data-vi="Giới thiệu công ty" data-en="About Us">Giới thiệu công ty</span>
+      </div>
+      <h1 data-vi="Giới thiệu công ty" data-en="About Us">Giới thiệu công ty</h1>
+      <p data-vi="Hơn 15 năm phát triển, S-Tec System Vina đã trở thành đối tác tin cậy của hàng trăm doanh nghiệp tại Việt Nam và khu vực."
+        data-en="Over 15 years of growth, S-Tec System Vina has become the trusted partner of hundreds of businesses across Vietnam and the region.">
+        Hơn 15 năm phát triển, S-Tec System Vina đã trở thành đối tác tin cậy của hàng trăm doanh nghiệp tại Việt Nam và
+        khu vực.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── OVERVIEW ───────────────────────────────── -->
+  <section>
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual fade-up">
+          <!-- Replace with actual company photo -->
+          <div class="about-placeholder">
+            <div class="big">🏢</div>
+            <div data-vi="Ảnh văn phòng công ty" data-en="Company office photo">Ảnh văn phòng công ty</div>
+          </div>
+          <div class="about-badge-card">
+            <div class="num">2009</div>
+            <div class="lbl" data-vi="Thành lập" data-en="Founded">Thành lập</div>
+          </div>
+        </div>
+
+        <div class="fade-up">
+          <span class="section-label" data-vi="Tổng quan" data-en="Overview">Tổng quan</span>
+          <h2 style="margin-bottom:18px" data-vi="Công ty Cổ phần S-Tec System Vina"
+            data-en="S-Tec System Vina Joint Stock Company">Công ty Cổ phần S-Tec System Vina</h2>
+          <p style="margin-bottom:16px"
+            data-vi="S-Tec System Vina là công ty đa lĩnh vực chuyên cung cấp các giải pháp và dịch vụ toàn diện cho doanh nghiệp: từ an ninh bảo vệ, kiểm soát côn trùng, quản lý cơ sở vật chất, vệ sinh môi trường, đến tích hợp hệ thống và Total Outsourcing."
+            data-en="S-Tec System Vina is a multi-sector company specialising in comprehensive business solutions: from security and pest control to facility management, cleaning, system integration, and total outsourcing.">
+            S-Tec System Vina là công ty đa lĩnh vực chuyên cung cấp các giải pháp và dịch vụ toàn diện cho doanh
+            nghiệp: từ an ninh bảo vệ, kiểm soát côn trùng, quản lý cơ sở vật chất, vệ sinh môi trường, đến tích hợp hệ
+            thống và Total Outsourcing.
+          </p>
+          <p data-vi="Là thành viên của mạng lưới S-Tec quốc tế, chúng tôi kế thừa công nghệ, kinh nghiệm và tiêu chuẩn vận hành toàn cầu, đồng thời thấu hiểu sâu sắc thị trường và văn hóa doanh nghiệp Việt Nam."
+            data-en="As a member of the international S-Tec network, we inherit global technology, expertise, and operational standards, while deeply understanding Vietnam's market and business culture.">
+            Là thành viên của mạng lưới S-Tec quốc tế, chúng tôi kế thừa công nghệ, kinh nghiệm và tiêu chuẩn vận hành
+            toàn cầu, đồng thời thấu hiểu sâu sắc thị trường và văn hóa doanh nghiệp Việt Nam.
+          </p>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px">
+            <div style="padding:20px;background:var(--off-white);border-radius:var(--r-md);text-align:center">
+              <div style="font-size:2rem;font-weight:800;color:var(--navy)">15+</div>
+              <div
+                style="font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-400);margin-top:4px"
+                data-vi="Năm kinh nghiệm" data-en="Years of Experience">Năm kinh nghiệm</div>
+            </div>
+            <div style="padding:20px;background:var(--off-white);border-radius:var(--r-md);text-align:center">
+              <div style="font-size:2rem;font-weight:800;color:var(--navy)">500+</div>
+              <div
+                style="font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-400);margin-top:4px"
+                data-vi="Khách hàng tin dùng" data-en="Trusted Clients">Khách hàng tin dùng</div>
+            </div>
+            <div style="padding:20px;background:var(--off-white);border-radius:var(--r-md);text-align:center">
+              <div style="font-size:2rem;font-weight:800;color:var(--navy)">9</div>
+              <div
+                style="font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-400);margin-top:4px"
+                data-vi="Lĩnh vực dịch vụ" data-en="Service Sectors">Lĩnh vực dịch vụ</div>
+            </div>
+            <div style="padding:20px;background:var(--off-white);border-radius:var(--r-md);text-align:center">
+              <div style="font-size:2rem;font-weight:800;color:var(--navy)">24/7</div>
+              <div
+                style="font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-400);margin-top:4px"
+                data-vi="Hỗ trợ liên tục" data-en="Support">Hỗ trợ liên tục</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── VALUES ────────────────────────────────── -->
+  <section style="background:var(--off-white)">
+    <div class="container">
+      <div class="section-header center fade-up">
+        <span class="section-label" data-vi="Giá trị cốt lõi" data-en="Core Values">Giá trị cốt lõi</span>
+        <h2 data-vi="Những gì chúng tôi tin tưởng" data-en="What We Believe In">Những gì chúng tôi tin tưởng</h2>
+      </div>
+      <div class="values-grid">
+        <div class="value-card fade-up">
+          <div class="value-num">01</div>
+          <h3 data-vi="Chất lượng" data-en="Quality">Chất lượng</h3>
+          <p data-vi="Chúng tôi không thỏa hiệp về chất lượng. Mỗi dịch vụ đều được thực hiện theo tiêu chuẩn cao nhất, từ tuyển dụng nhân sự đến quy trình vận hành."
+            data-en="We do not compromise on quality. Every service is delivered to the highest standard, from staff recruitment to operational processes.">
+            Chúng tôi không thỏa hiệp về chất lượng. Mỗi dịch vụ đều được thực hiện theo tiêu chuẩn cao nhất, từ tuyển
+            dụng nhân sự đến quy trình vận hành.
+          </p>
+        </div>
+        <div class="value-card fade-up">
+          <div class="value-num">02</div>
+          <h3 data-vi="Tin cậy" data-en="Trust">Tin cậy</h3>
+          <p data-vi="Sự tin tưởng của khách hàng là tài sản quý giá nhất của chúng tôi. Chúng tôi cam kết minh bạch, trung thực và nhất quán trong mọi hoạt động."
+            data-en="Our clients' trust is our most valuable asset. We are committed to transparency, honesty, and consistency in everything we do.">
+            Sự tin tưởng của khách hàng là tài sản quý giá nhất của chúng tôi. Chúng tôi cam kết minh bạch, trung thực
+            và nhất quán trong mọi hoạt động.
+          </p>
+        </div>
+        <div class="value-card fade-up">
+          <div class="value-num">03</div>
+          <h3 data-vi="Đổi mới" data-en="Innovation">Đổi mới</h3>
+          <p data-vi="Chúng tôi liên tục cải tiến quy trình và ứng dụng công nghệ mới để mang lại giải pháp hiệu quả, phù hợp với nhu cầu ngày càng cao của thị trường."
+            data-en="We continuously improve our processes and adopt new technologies to deliver efficient solutions that keep pace with ever-evolving market demands.">
+            Chúng tôi liên tục cải tiến quy trình và ứng dụng công nghệ mới để mang lại giải pháp hiệu quả, phù hợp với
+            nhu cầu ngày càng cao của thị trường.
+          </p>
+        </div>
+        <div class="value-card fade-up">
+          <div class="value-num">04</div>
+          <h3 data-vi="Con người" data-en="People">Con người</h3>
+          <p data-vi="Nhân sự là yếu tố cốt lõi tạo nên sự khác biệt. Chúng tôi đầu tư mạnh vào đào tạo, phát triển và phúc lợi cho từng thành viên trong đội ngũ."
+            data-en="Our people are the core differentiator. We invest heavily in the training, development, and wellbeing of every member of our team.">
+            Nhân sự là yếu tố cốt lõi tạo nên sự khác biệt. Chúng tôi đầu tư mạnh vào đào tạo, phát triển và phúc lợi
+            cho từng thành viên trong đội ngũ.
+          </p>
+        </div>
+        <div class="value-card fade-up">
+          <div class="value-num">05</div>
+          <h3 data-vi="Trách nhiệm" data-en="Responsibility">Trách nhiệm</h3>
+          <p data-vi="Chúng tôi đặt trách nhiệm với khách hàng, đối tác, nhân viên và cộng đồng lên hàng đầu trong mọi quyết định kinh doanh."
+            data-en="We place responsibility to our clients, partners, employees, and community at the forefront of every business decision.">
+            Chúng tôi đặt trách nhiệm với khách hàng, đối tác, nhân viên và cộng đồng lên hàng đầu trong mọi quyết định
+            kinh doanh.
+          </p>
+        </div>
+        <div class="value-card fade-up">
+          <div class="value-num">06</div>
+          <h3 data-vi="Toàn cầu hóa" data-en="Global Reach">Toàn cầu hóa</h3>
+          <p data-vi="Thông qua mạng lưới S-Tec quốc tế, chúng tôi tiếp cận tiêu chuẩn toàn cầu và mang những thực tiễn tốt nhất đến với doanh nghiệp Việt Nam."
+            data-en="Through the international S-Tec network, we access global standards and bring the best practices to Vietnamese businesses.">
+            Thông qua mạng lưới S-Tec quốc tế, chúng tôi tiếp cận tiêu chuẩn toàn cầu và mang những thực tiễn tốt nhất
+            đến với doanh nghiệp Việt Nam.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LEADERSHIP ─────────────────────────────── -->
+  <section id="leadership">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label" data-vi="Ban lãnh đạo" data-en="Leadership">Ban lãnh đạo</span>
+        <h2 data-vi="Đội ngũ dẫn dắt chúng tôi" data-en="The Team Leading Us">Đội ngũ dẫn dắt chúng tôi</h2>
+      </div>
+      <div class="leadership-grid">
+        <div class="leader-card fade-up">
+          <div class="leader-avatar">👤</div>
+          <div>
+            <!-- Replace with actual name & photo -->
+            <h3 class="leader-name" data-vi="[Họ tên CEO]" data-en="[CEO Name]">[Họ tên CEO]</h3>
+            <div class="leader-role">CEO</div>
+            <p data-vi="Với tầm nhìn chiến lược và kinh nghiệm quản lý sâu rộng, CEO đã dẫn dắt S-Tec System Vina phát triển mạnh mẽ, mở rộng danh mục dịch vụ và nâng cao chất lượng phục vụ khách hàng."
+              data-en="With strategic vision and extensive management experience, our CEO has guided S-Tec System Vina's strong growth, expanding our service portfolio and elevating the quality of client service.">
+              Với tầm nhìn chiến lược và kinh nghiệm quản lý sâu rộng, CEO đã dẫn dắt S-Tec System Vina phát triển mạnh
+              mẽ, mở rộng danh mục dịch vụ và nâng cao chất lượng phục vụ khách hàng.
+            </p>
+          </div>
+        </div>
+        <div class="leader-card fade-up">
+          <div class="leader-avatar">👤</div>
+          <div>
+            <!-- Replace with actual name & photo -->
+            <h3 class="leader-name" data-vi="[Họ tên Giám đốc]" data-en="[Director Name]">[Họ tên Giám đốc]</h3>
+            <div class="leader-role" data-vi="Giám đốc điều hành" data-en="Managing Director">Giám đốc điều hành</div>
+            <p data-vi="Chịu trách nhiệm điều phối toàn bộ hoạt động vận hành, đảm bảo các tiêu chuẩn chất lượng dịch vụ được duy trì nhất quán trên tất cả các lĩnh vực kinh doanh."
+              data-en="Responsible for coordinating all operational activities, ensuring consistent service quality standards are upheld across all business sectors.">
+              Chịu trách nhiệm điều phối toàn bộ hoạt động vận hành, đảm bảo các tiêu chuẩn chất lượng dịch vụ được duy
+              trì nhất quán trên tất cả các lĩnh vực kinh doanh.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TIMELINE ────────────────────────────────── -->
+  <section style="background:var(--off-white)">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label" data-vi="Lịch sử phát triển" data-en="Our Journey">Lịch sử phát triển</span>
+        <h2 data-vi="Các cột mốc quan trọng" data-en="Key Milestones">Các cột mốc quan trọng</h2>
+      </div>
+      <div style="max-width:680px">
+        <div class="timeline">
+          <div class="timeline-item fade-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2009</div>
+            <h4 data-vi="Thành lập công ty" data-en="Company Founded">Thành lập công ty</h4>
+            <p data-vi="S-Tec System Vina được thành lập tại Hà Nội, bắt đầu với các dịch vụ an ninh bảo vệ và vệ sinh môi trường."
+              data-en="S-Tec System Vina was established in Hanoi, beginning with security and cleaning services.">
+              S-Tec System Vina được thành lập tại Hà Nội, bắt đầu với các dịch vụ an ninh bảo vệ và vệ sinh môi trường.
+            </p>
+          </div>
+          <div class="timeline-item fade-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2013</div>
+            <h4 data-vi="Mở rộng danh mục dịch vụ" data-en="Service Portfolio Expansion">Mở rộng danh mục dịch vụ</h4>
+            <p data-vi="Bổ sung dịch vụ kiểm soát côn trùng, quản lý cơ sở vật chất và dịch vụ resort/khách sạn vào danh mục hoạt động."
+              data-en="Added pest control, facility management, and resort/hotel services to our operational portfolio.">
+              Bổ sung dịch vụ kiểm soát côn trùng, quản lý cơ sở vật chất và dịch vụ resort/khách sạn vào danh mục hoạt
+              động.
+            </p>
+          </div>
+          <div class="timeline-item fade-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2017</div>
+            <h4 data-vi="Gia nhập mạng lưới S-Tec quốc tế" data-en="Joined International S-Tec Network">Gia nhập mạng
+              lưới S-Tec quốc tế</h4>
+            <p data-vi="Trở thành thành viên chính thức của S-Tec Network, tiếp cận công nghệ và tiêu chuẩn quản lý quốc tế."
+              data-en="Became an official member of the S-Tec Network, gaining access to international technology and management standards.">
+              Trở thành thành viên chính thức của S-Tec Network, tiếp cận công nghệ và tiêu chuẩn quản lý quốc tế.
+            </p>
+          </div>
+          <div class="timeline-item fade-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2021</div>
+            <h4 data-vi="Ra mắt S-Tec Security" data-en="S-Tec Security Launched">Ra mắt S-Tec Security</h4>
+            <p data-vi="Thành lập S-Tec Security — công ty thành viên chuyên biệt về giải pháp an ninh, nhân lực và trung tâm giám sát."
+              data-en="Established S-Tec Security — a dedicated subsidiary specialising in security solutions, manpower, and monitoring centre services.">
+              Thành lập S-Tec Security — công ty thành viên chuyên biệt về giải pháp an ninh, nhân lực và trung tâm giám
+              sát.
+            </p>
+          </div>
+          <div class="timeline-item fade-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2024</div>
+            <h4 data-vi="Tăng trưởng và đổi mới" data-en="Growth & Renewal">Tăng trưởng và đổi mới</h4>
+            <p data-vi="Đạt mốc 500+ khách hàng, đổi mới nhận diện thương hiệu và mở rộng mạng lưới dịch vụ toàn quốc."
+              data-en="Reached 500+ clients, refreshed brand identity, and expanded the nationwide service network.">
+              Đạt mốc 500+ khách hàng, đổi mới nhận diện thương hiệu và mở rộng mạng lưới dịch vụ toàn quốc.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── S-TEC NETWORK ───────────────────────────── -->
+  <section id="network" style="background:var(--navy)">
+    <div class="container">
+      <div class="section-header center fade-up">
+        <span class="section-label" style="color:var(--blue-light)">S-Tec Network</span>
+        <h2 style="color:var(--white)" data-vi="Mạng lưới toàn cầu" data-en="Global Network">Mạng lưới toàn cầu</h2>
+        <p style="color:rgba(255,255,255,.55);margin:0 auto"
+          data-vi="Là thành viên của S-Tec Network, chúng tôi kết nối với hệ thống đối tác và chi nhánh trên khắp thế giới, mang lại tiêu chuẩn dịch vụ quốc tế cho khách hàng tại Việt Nam."
+          data-en="As a member of the S-Tec Network, we connect with a system of partners and branches worldwide, bringing international service standards to clients in Vietnam.">
+          Là thành viên của S-Tec Network, chúng tôi kết nối với hệ thống đối tác và chi nhánh trên khắp thế giới, mang
+          lại tiêu chuẩn dịch vụ quốc tế cho khách hàng tại Việt Nam.
+        </p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px" class="fade-up">
+        <div
+          style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:32px;text-align:center">
+          <div style="font-size:2rem;margin-bottom:12px">🇰🇷</div>
+          <h4 style="color:var(--white);margin-bottom:6px">Korea HQ</h4>
+          <p style="color:rgba(255,255,255,.45);font-size:.85rem" data-vi="Trụ sở chính và trung tâm R&D"
+            data-en="Global headquarters and R&D centre">Trụ sở chính và trung tâm R&D</p>
+        </div>
+        <div
+          style="background:rgba(29,78,216,.15);border:1px solid rgba(29,78,216,.3);border-radius:var(--r-lg);padding:32px;text-align:center">
+          <div style="font-size:2rem;margin-bottom:12px">🇻🇳</div>
+          <h4 style="color:var(--white);margin-bottom:6px">Vietnam</h4>
+          <p style="color:rgba(255,255,255,.45);font-size:.85rem" data-vi="S-Tec System Vina — Hà Nội"
+            data-en="S-Tec System Vina — Hanoi">S-Tec System Vina — Hà Nội</p>
+        </div>
+        <div
+          style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:32px;text-align:center">
+          <div style="font-size:2rem;margin-bottom:12px">🌏</div>
+          <h4 style="color:var(--white);margin-bottom:6px" data-vi="Khu vực" data-en="Regional">Khu vực</h4>
+          <p style="color:rgba(255,255,255,.45);font-size:.85rem" data-vi="Mạng lưới đối tác châu Á"
+            data-en="Asia-Pacific partner network">Mạng lưới đối tác châu Á</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ──────────────────────────────────────── -->
+  <section style="padding:80px 0">
+    <div class="container">
+      <div class="cta-banner">
+        <h2 data-vi="Hãy cùng chúng tôi xây dựng một môi trường an toàn hơn"
+          data-en="Let's build a safer environment together">Hãy cùng chúng tôi xây dựng một môi trường an toàn hơn</h2>
+        <p data-vi="Liên hệ ngay hôm nay để nhận tư vấn và báo giá dịch vụ phù hợp với nhu cầu của doanh nghiệp bạn."
+          data-en="Contact us today to receive tailored service advice and a quote suited to your business needs.">
+          Liên hệ ngay hôm nay để nhận tư vấn và báo giá dịch vụ phù hợp với nhu cầu của doanh nghiệp bạn.
+        </p>
+        <div class="cta-actions">
+          <a href="index.html#contact" class="btn btn-primary" data-vi="Liên hệ ngay" data-en="Get in Touch">Liên hệ
+            ngay</a>
+          <a href="index.html#services" class="btn btn-outline-white" data-vi="Xem tất cả dịch vụ"
+            data-en="View All Services">Xem tất cả dịch vụ</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ───────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo-text">S-TEC <span>SYSTEM VINA</span></span>
+          <p data-vi="Công ty Cổ phần S-Tec System Vina — Đối tác dịch vụ toàn diện, đáng tin cậy tại Việt Nam."
+            data-en="S-Tec System Vina JSC — Your trusted, comprehensive service partner in Vietnam.">
+            Công ty Cổ phần S-Tec System Vina — Đối tác dịch vụ toàn diện, đáng tin cậy tại Việt Nam.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5 data-vi="Công ty" data-en="Company">Công ty</h5>
+          <ul>
+            <li><a href="about.html" data-vi="Giới thiệu" data-en="About Us">Giới thiệu</a></li>
+            <li><a href="about.html#leadership" data-vi="Lãnh đạo" data-en="Leadership">Lãnh đạo</a></li>
+            <li><a href="about.html#network" data-vi="S-Tec Network" data-en="S-Tec Network">S-Tec Network</a></li>
+            <li><a href="#" data-vi="Tuyển dụng" data-en="Careers">Tuyển dụng</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5 data-vi="Dịch vụ" data-en="Services">Dịch vụ</h5>
+          <ul>
+            <li><a href="security.html" data-vi="An ninh bảo vệ" data-en="Security">An ninh bảo vệ</a></li>
+            <li><a href="#" data-vi="Kiểm soát côn trùng" data-en="Pest Control">Kiểm soát côn trùng</a></li>
+            <li><a href="#" data-vi="Quản lý cơ sở vật chất" data-en="Facility Management">Quản lý cơ sở vật chất</a>
+            </li>
+            <li><a href="#" data-vi="Phòng cháy chữa cháy" data-en="Fire Prevention">Phòng cháy chữa cháy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <span>Copyright 2026 © S-Tec System Vina</span>
+        <!-- <span data-vi="Được thiết kế với ♥ tại Hà Nội" data-en="Designed with ♥ in Hanoi">Được thiết kế với ♥ tại Hà Nội</span> -->
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let currentLang = 'vi';
+    function setLang(lang) {
+      currentLang = lang;
+      document.querySelectorAll('[data-vi]').forEach(el => {
+        el.textContent = el.dataset[lang] || el.dataset.vi;
+      });
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        if ((btn.textContent === 'VI' && lang === 'vi') || (btn.textContent === 'EN' && lang === 'en')) btn.classList.add('active');
+      });
+      document.documentElement.lang = lang === 'vi' ? 'vi' : 'en';
+    }
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+    function toggleMenu() {
+      document.getElementById('mobileNav').classList.toggle('open');
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    document.querySelectorAll('.mobile-nav a').forEach(link => {
+      link.addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+    });
+  </script>
+</body>
+
+</html>

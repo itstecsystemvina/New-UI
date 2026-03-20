@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tin tức – S-Tec System Vina</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .news-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 48px;
+      align-items: start
+    }
+
+    .news-featured {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      border: 1px solid var(--gray-100);
+      margin-bottom: 48px;
+      background: var(--white);
+      transition: var(--t);
+      text-decoration: none;
+      color: inherit
+    }
+
+    .news-featured:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px)
+    }
+
+    .nf-image {
+      width: 100%;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+      display: block
+    }
+
+    .nf-placeholder {
+      width: 100%;
+      aspect-ratio: 16/10;
+      background: linear-gradient(145deg, var(--navy), var(--navy-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: rgba(255, 255, 255, .15)
+    }
+
+    .nf-body {
+      padding: 40px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center
+    }
+
+    .news-tag {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--blue);
+      margin-bottom: 14px
+    }
+
+    .nf-body h2 {
+      font-size: 1.5rem;
+      line-height: 1.3;
+      color: var(--navy);
+      margin-bottom: 12px
+    }
+
+    .nf-body p {
+      font-size: .9rem;
+      line-height: 1.75
+    }
+
+    .nf-meta {
+      display: flex;
+      gap: 12px;
+      font-size: .78rem;
+      color: var(--gray-400);
+      margin-top: 16px
+    }
+
+    .read-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--blue);
+      transition: var(--t);
+      margin-top: 16px
+    }
+
+    .read-link:hover {
+      gap: 10px
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px
+    }
+
+    .news-card {
+      background: var(--white);
+      border-radius: var(--r-lg);
+      border: 1px solid var(--gray-100);
+      overflow: hidden;
+      transition: var(--t);
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit
+    }
+
+    .news-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+      border-color: transparent
+    }
+
+    .nc-image {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block
+    }
+
+    .nc-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(145deg, var(--navy), var(--navy-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: rgba(255, 255, 255, .15)
+    }
+
+    .nc-body {
+      padding: 22px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1
+    }
+
+    .nc-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px
+    }
+
+    .nc-date {
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: .05em
+    }
+
+    .nc-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--gray-200)
+    }
+
+    .nc-cat {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--blue)
+    }
+
+    .nc-body h4 {
+      font-size: .9375rem;
+      line-height: 1.45;
+      color: var(--navy);
+      margin-bottom: 10px
+    }
+
+    .nc-body p {
+      font-size: .84rem;
+      line-height: 1.65;
+      flex: 1
+    }
+
+    .nc-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 16px;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--blue);
+      transition: var(--t)
+    }
+
+    .nc-link:hover {
+      gap: 9px
+    }
+
+    .sidebar-card {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--r-lg);
+      padding: 28px;
+      margin-bottom: 24px
+    }
+
+    .sidebar-card h5 {
+      font-size: .72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--gray-400);
+      margin-bottom: 20px
+    }
+
+    .sidebar-article {
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--gray-100);
+      text-decoration: none;
+      transition: var(--t)
+    }
+
+    .sidebar-article:last-child {
+      border-bottom: none;
+      padding-bottom: 0
+    }
+
+    .sidebar-article:hover .sa-title {
+      color: var(--blue)
+    }
+
+    .sa-date {
+      font-size: .7rem;
+      font-weight: 700;
+      color: var(--white);
+      background: var(--navy);
+      border-radius: var(--r-sm);
+      padding: 6px 9px;
+      text-align: center;
+      flex-shrink: 0;
+      line-height: 1.3
+    }
+
+    .sa-title {
+      font-size: .84rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.4;
+      transition: var(--t)
+    }
+
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px
+    }
+
+    .tag-pill {
+      font-size: .75rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: var(--r-full);
+      background: var(--off-white);
+      color: var(--gray-600);
+      border: 1px solid var(--gray-100);
+      transition: var(--t);
+      cursor: pointer
+    }
+
+    .tag-pill:hover {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy)
+    }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 48px;
+      flex-wrap: wrap
+    }
+
+    .page-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--r-md);
+      border: 1.5px solid var(--gray-200);
+      background: var(--white);
+      font-family: inherit;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--t)
+    }
+
+    .page-btn:hover,
+    .page-btn.active {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy)
+    }
+
+    .page-btn:disabled {
+      opacity: .35;
+      cursor: not-allowed
+    }
+
+    /* Skeleton */
+    .skel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px
+    }
+
+    .skel-card {
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      border: 1px solid var(--gray-100)
+    }
+
+    .skel-img,
+    .skel-line {
+      background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite
+    }
+
+    .skel-img {
+      width: 100%;
+      aspect-ratio: 16/9
+    }
+
+    .skel-body {
+      padding: 20px
+    }
+
+    .skel-line {
+      height: 11px;
+      border-radius: 4px;
+      margin-bottom: 10px
+    }
+
+    .skel-line.s {
+      width: 55%
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 200% 0
+      }
+
+      100% {
+        background-position: -200% 0
+      }
+    }
+
+    .state-box {
+      text-align: center;
+      padding: 64px 24px;
+      color: var(--gray-400)
+    }
+
+    .state-box .icon {
+      font-size: 3rem;
+      margin-bottom: 16px
+    }
+
+    @media(max-width:1024px) {
+      .news-layout {
+        grid-template-columns: 1fr
+      }
+
+      .news-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .news-featured {
+        grid-template-columns: 1fr
+      }
+
+      .nf-image {
+        aspect-ratio: 16/7
+      }
+    }
+
+    @media(max-width:640px) {
+      .news-grid {
+        grid-template-columns: 1fr
+      }
+
+      .nf-body {
+        padding: 28px
+      }
+
+      .nf-body h2 {
+        font-size: 1.2rem
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="navbar-inner">
+        <a href="index.html" class="logo">
+          <div
+            style="width:38px;height:38px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:.8rem;flex-shrink:0">
+            ST</div>
+          <div class="logo-text">S-TEC<br><span>SYSTEM VINA</span></div>
+        </a>
+        <nav class="nav-links">
+          <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+          <a href="about.html" data-vi="Giới thiệu" data-en="About">Giới thiệu</a>
+          <a href="index.html#services" data-vi="Dịch vụ" data-en="Services">Dịch vụ</a>
+          <a href="security.html" data-vi="An ninh" data-en="Security">An ninh</a>
+          <a href="news.html" class="active" data-vi="Tin tức" data-en="News">Tin tức</a>
+          <a href="careers.html" data-vi="Tuyển dụng" data-en="Careers">Tuyển dụng</a>
+          <a href="index.html#contact" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+        </nav>
+        <div class="nav-right">
+          <div class="lang-toggle">
+            <button class="lang-btn active" onclick="setLang('vi')">VI</button>
+            <button class="lang-btn" onclick="setLang('en')">EN</button>
+          </div>
+          <a href="index.html#contact" class="nav-links nav-cta btn" data-vi="Liên hệ ngay" data-en="Contact Us">Liên hệ
+            ngay</a>
+        </div>
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+    <a href="about.html" data-vi="Giới thiệu" data-en="About">Giới thiệu</a>
+    <a href="index.html#services" data-vi="Dịch vụ" data-en="Services">Dịch vụ</a>
+    <a href="security.html" data-vi="An ninh" data-en="Security">An ninh</a>
+    <a href="news.html" class="active" data-vi="Tin tức" data-en="News">Tin tức</a>
+    <a href="careers.html" data-vi="Tuyển dụng" data-en="Careers">Tuyển dụng</a>
+    <a href="index.html#contact" data-vi="Liên hệ" data-en="Contact">Liên hệ</a>
+    <div class="mobile-lang">
+      <button class="lang-btn active" onclick="setLang('vi')">VI</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+        <span class="bc-sep">/</span>
+        <span class="bc-cur" data-vi="Tin tức" data-en="News">Tin tức</span>
+      </div>
+      <h1 data-vi="Tin tức & Hoạt động" data-en="News & Updates">Tin tức & Hoạt động</h1>
+      <p data-vi="Cập nhật những tin tức mới nhất, các hoạt động và cột mốc phát triển của S-Tec System Vina."
+        data-en="Stay up to date with the latest news and milestones from S-Tec System Vina.">Cập nhật những tin tức mới
+        nhất, các hoạt động và cột mốc phát triển của S-Tec System Vina.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="news-layout">
+        <div>
+          <div id="featured-wrap" class="fade-up"></div>
+          <div id="grid-wrap" class="fade-up"></div>
+          <div id="pagination" class="pagination fade-up"></div>
+        </div>
+        <aside>
+          <div class="sidebar-card fade-up">
+            <h5 data-vi="Bài viết gần đây" data-en="Recent Articles">Bài viết gần đây</h5>
+            <div id="sidebar-recent">
+              <p style="font-size:.84rem;color:var(--gray-400)">Đang tải…</p>
+            </div>
+          </div>
+          <div class="sidebar-card fade-up">
+            <h5 data-vi="Chủ đề" data-en="Topics">Chủ đề</h5>
+            <div class="tag-cloud">
+              <span class="tag-pill" data-vi="An ninh" data-en="Security">An ninh</span>
+              <span class="tag-pill" data-vi="Hợp tác" data-en="Partnership">Hợp tác</span>
+              <span class="tag-pill" data-vi="Công nghệ" data-en="Technology">Công nghệ</span>
+              <span class="tag-pill" data-vi="Phòng cháy" data-en="Fire Safety">Phòng cháy</span>
+              <span class="tag-pill">MB Bank</span>
+              <span class="tag-pill">G-Group</span>
+              <span class="tag-pill" data-vi="CSR" data-en="CSR">CSR</span>
+              <span class="tag-pill" data-vi="Tăng trưởng" data-en="Growth">Tăng trưởng</span>
+            </div>
+          </div>
+          <div class="sidebar-card fade-up" style="background:var(--navy);border-color:transparent">
+            <h5 style="color:rgba(255,255,255,.45)" data-vi="Liên hệ với chúng tôi" data-en="Get in Touch">Liên hệ với
+              chúng tôi</h5>
+            <p style="color:rgba(255,255,255,.6);font-size:.875rem;margin-bottom:20px"
+              data-vi="Bạn có nhu cầu sử dụng dịch vụ? Hãy để chúng tôi tư vấn ngay."
+              data-en="Need our services? Let us advise you today.">Bạn có nhu cầu sử dụng dịch vụ? Hãy để chúng tôi tư
+              vấn ngay.</p>
+            <a href="index.html#contact" class="btn btn-primary"
+              style="width:100%;justify-content:center;font-size:.875rem" data-vi="Liên hệ ngay →"
+              data-en="Contact Us →">Liên hệ ngay →</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo-text">S-TEC <span>SYSTEM VINA</span></span>
+          <p data-vi="Công ty Cổ phần S-Tec System Vina — Đối tác dịch vụ toàn diện, đáng tin cậy tại Việt Nam."
+            data-en="S-Tec System Vina JSC — Your trusted, comprehensive service partner in Vietnam.">Công ty Cổ phần
+            S-Tec System Vina — Đối tác dịch vụ toàn diện, đáng tin cậy tại Việt Nam.</p>
+        </div>
+        <div class="footer-col">
+          <h5 data-vi="Công ty" data-en="Company">Công ty</h5>
+          <ul>
+            <li><a href="about.html" data-vi="Giới thiệu" data-en="About Us">Giới thiệu</a></li>
+            <li><a href="news.html" data-vi="Tin tức" data-en="News">Tin tức</a></li>
+            <li><a href="careers.html" data-vi="Tuyển dụng" data-en="Careers">Tuyển dụng</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5 data-vi="Dịch vụ" data-en="Services">Dịch vụ</h5>
+          <ul>
+            <li><a href="security.html" data-vi="An ninh bảo vệ" data-en="Security">An ninh bảo vệ</a></li>
+            <li><a href="#" data-vi="Kiểm soát côn trùng" data-en="Pest Control">Kiểm soát côn trùng</a></li>
+            <li><a href="#" data-vi="Quản lý cơ sở vật chất" data-en="Facility Management">Quản lý cơ sở vật chất</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <span>Copyright 2026 © S-Tec System Vina</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="wp-api.js"></script>
+  <script>
+    let currentLang = localStorage.getItem('stec-lang') || 'vi';
+    function setLang(lang) {
+      currentLang = lang; localStorage.setItem('stec-lang', lang);
+      document.querySelectorAll('[data-vi]').forEach(el => el.textContent = el.dataset[lang] || el.dataset.vi);
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.lang-btn').forEach(b => { if ((b.textContent === 'VI' && lang === 'vi') || (b.textContent === 'EN' && lang === 'en')) b.classList.add('active'); });
+      document.documentElement.lang = lang === 'vi' ? 'vi' : 'en';
+    }
+    setLang(currentLang);
+    window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20));
+    function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+    document.querySelectorAll('.mobile-nav a').forEach(l => l.addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open')));
+    new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: .08 }).observe(document.querySelector('.fade-up'));
+
+    // ─────────────────────────────────────────────
+    let catId = null, curPage = 1, totPages = 1;
+    const vi = x => currentLang === 'vi' ? x.vi : x.en;
+
+    const skeleton = n => `<div class="skel-grid">${Array(n).fill(`
+    <div class="skel-card"><div class="skel-img"></div>
+    <div class="skel-body"><div class="skel-line s"></div><div class="skel-line"></div><div class="skel-line"></div></div></div>`).join('')}</div>`;
+
+    function renderFeatured(p) {
+      const img = STEC_WP.getFeaturedImage(p, 'large');
+      return `<a href="${p.link}" target="_blank" class="news-featured">
+      ${img ? `<img class="nf-image" src="${img}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` : ''}
+      <div class="nf-placeholder" ${img ? 'style="display:none"' : ''}>📰</div>
+      <div class="nf-body">
+        <div class="news-tag">★ ${vi({ vi: 'Nổi bật · Tin tức', en: 'Featured · News' })}</div>
+        <h2>${p.title.rendered}</h2>
+        <p>${STEC_WP.stripHtml(p.excerpt.rendered).slice(0, 200)}…</p>
+        <div class="nf-meta"><span class="nf-date">${STEC_WP.formatDate(p.date)}</span><span>·</span><span>S-Tec System Vina</span></div>
+        <span class="read-link">${vi({ vi: 'Đọc bài viết →', en: 'Read Article →' })}</span>
+      </div></a>`;
+    }
+
+    function renderCard(p) {
+      const img = STEC_WP.getFeaturedImage(p, 'medium_large');
+      return `<a href="${p.link}" target="_blank" class="news-card">
+      ${img ? `<img class="nc-image" src="${img}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` : ''}
+      <div class="nc-placeholder" ${img ? 'style="display:none"' : ''}>📰</div>
+      <div class="nc-body">
+        <div class="nc-meta"><span class="nc-date">${STEC_WP.formatDate(p.date)}</span><span class="nc-dot"></span><span class="nc-cat">${vi({ vi: 'Tin tức', en: 'News' })}</span></div>
+        <h4>${p.title.rendered}</h4>
+        <p>${STEC_WP.stripHtml(p.excerpt.rendered).slice(0, 120)}…</p>
+        <span class="nc-link">${vi({ vi: 'Đọc thêm →', en: 'Read More →' })}</span>
+      </div></a>`;
+    }
+
+    function renderSidebar(posts) {
+      document.getElementById('sidebar-recent').innerHTML = posts.slice(0, 5).map(p => {
+        const { day, month } = STEC_WP.formatDateShort(p.date);
+        return `<a href="${p.link}" target="_blank" class="sidebar-article">
+        <div class="sa-date">${day}<br>${month}</div>
+        <div class="sa-title">${p.title.rendered}</div></a>`;
+      }).join('');
+    }
+
+    function renderPagination() {
+      const el = document.getElementById('pagination');
+      if (totPages <= 1) { el.innerHTML = ''; return; }
+      let h = `<button class="page-btn" onclick="loadPage(${curPage - 1})" ${curPage === 1 ? 'disabled' : ''}>‹</button>`;
+      for (let i = 1; i <= totPages; i++) h += `<button class="page-btn ${i === curPage ? 'active' : ''}" onclick="loadPage(${i})">${i}</button>`;
+      h += `<button class="page-btn" onclick="loadPage(${curPage + 1})" ${curPage === totPages ? 'disabled' : ''}>›</button>`;
+      el.innerHTML = h;
+    }
+
+    async function loadPage(page) {
+      curPage = page;
+      document.getElementById('grid-wrap').innerHTML = skeleton(6);
+      document.getElementById('featured-wrap').innerHTML = '';
+      try {
+        const { posts, totalPages: tp } = await STEC_WP.getPosts(catId, page, 7);
+        totPages = tp;
+        if (!posts.length) {
+          document.getElementById('grid-wrap').innerHTML = `<div class="state-box"><div class="icon">📭</div><p>${vi({ vi: 'Chưa có bài viết nào.', en: 'No posts yet.' })}</p></div>`;
+        } else {
+          const [first, ...rest] = posts;
+          document.getElementById('featured-wrap').innerHTML = renderFeatured(first);
+          document.getElementById('grid-wrap').innerHTML = rest.length ? `<div class="news-grid">${rest.map(renderCard).join('')}</div>` : '';
+          renderSidebar(posts);
+        }
+        renderPagination();
+        if (page > 1) window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch {
+        document.getElementById('grid-wrap').innerHTML = `<div class="state-box"><div class="icon">⚠️</div><p>${vi({ vi: 'Không thể tải bài viết. Vui lòng thử lại.', en: 'Could not load posts. Please try again.' })}</p></div>`;
+      }
+    }
+
+    async function init() {
+      document.getElementById('grid-wrap').innerHTML = skeleton(6);
+      try {
+        const cat = await STEC_WP.getCategoryBySlug(STEC_WP.categories.news);
+        catId = cat.id;
+        await loadPage(1);
+      } catch {
+        document.getElementById('grid-wrap').innerHTML = `<div class="state-box"><div class="icon">⚠️</div><p>Không thể kết nối WordPress API.</p></div>`;
+      }
+    }
+    init();
+  </script>
+</body>
+
+</html>
