@@ -8,6 +8,47 @@
   <meta name="description"
     content="S-Tec System Vina – Giải pháp toàn diện về an ninh, vệ sinh, quản lý cơ sở vật chất và hơn thế nữa.">
   <link rel="stylesheet" href="styles.css">
+
+  <!-- ============================================================
+    CIRCUIT BG — Step 1: Style the canvas inside .hero
+    - position: absolute so it sits behind all hero content
+    - filter: blur + brightness to keep it subtle/dreamy
+    - pointer-events: none so clicks pass through to buttons/links
+  ============================================================ -->
+  <style>
+    #hero-circuit-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      filter: blur(1.2px) brightness(0.82);
+      z-index: 0;
+      /* behind .hero-bg overlay and hero content */
+    }
+
+    /* Make sure the existing .hero stays position:relative
+       so the canvas absolute-positions inside it correctly.
+       If styles.css already sets this, the rule below is harmless. */
+    .hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Lift hero content above the canvas */
+    .hero .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* .hero-bg is your original dark overlay — keep it above canvas */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      /* sits between canvas (0) and content (2) */
+    }
+  </style>
 </head>
 
 <body>
@@ -17,7 +58,6 @@
     <div class="container">
       <div class="navbar-inner">
         <a href="index.html" class="logo">
-          <!-- Replace src with your actual logo -->
           <div
             style="width:38px;height:38px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:.8rem;flex-shrink:0">
             ST</div>
@@ -64,7 +104,17 @@
 
   <!-- ── HERO ────────────────────────────────── -->
   <section class="hero">
+
+    <!-- ============================================================
+      CIRCUIT BG — Step 2: Canvas element
+      - Inserted as the FIRST child of .hero, before .hero-bg
+      - The JS below will auto-size it to match .hero's dimensions
+    ============================================================ -->
+    <canvas id="hero-circuit-canvas"></canvas>
+
+    <!-- Your original dark overlay — unchanged, sits above canvas -->
     <div class="hero-bg"></div>
+
     <div class="container">
       <div class="hero-content">
         <div class="hero-badge">
@@ -230,7 +280,6 @@
     <div class="container">
       <div class="about-grid">
         <div class="about-visual fade-up">
-          <!-- Replace this with an actual company photo -->
           <div class="about-placeholder">
             <div class="big">🏢</div>
             <div data-vi="Ảnh công ty — thay thế bằng ảnh thực tế" data-en="Company photo — replace with actual image">
@@ -492,7 +541,6 @@
       <div class="footer-divider"></div>
       <div class="footer-bottom">
         <span>Copyright 2026 © S-Tec System Vina</span>
-        <!-- <span data-vi="Được thiết kế với ♥ tại Hà Nội" data-en="Designed with ♥ in Hanoi">Được thiết kế với ♥ tại Hà Nội</span> -->
       </div>
     </div>
   </footer>
@@ -500,7 +548,6 @@
   <script>
     // ── Language switcher
     let currentLang = 'vi';
-
     function setLang(lang) {
       currentLang = lang;
       document.querySelectorAll('[data-vi]').forEach(el => {
@@ -536,6 +583,381 @@
       link.addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
     });
   </script>
+
+  <!-- ============================================================
+    CIRCUIT BG — Step 3: Animation script
+    Placed at end of <body> so the canvas element already exists in DOM.
+
+    How it works:
+    ┌─ buildHexGrid()  → creates faint hexagon grid (top-right area)
+    ├─ buildTraces()   → defines 6 horizontal circuit paths with
+    │                    right-angle turns, dots, circles, arrows, dashes
+    ├─ buildPulses()   → one glowing pulse per trace that loops 0→1
+    └─ frame()         → rAF loop: clear → bg → hexagons → traces → pulses → vignette
+
+    Key tuning constants:
+      pulse.speed   → how fast each light travels (lower = slower)
+      filter: blur  → set on the <canvas> via CSS above
+      opacity values inside drawTraces() → overall line brightness
+  ============================================================ -->
+  <script>
+    (function () {
+      const canvas = document.getElementById('hero-circuit-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H;
+
+      // ── CIRCUIT BG: resize canvas to match .hero's rendered size ──
+      function resize() {
+        const hero = canvas.parentElement; // the <section class="hero">
+        const dpr = window.devicePixelRatio || 1;
+        W = hero.offsetWidth;
+        H = hero.offsetHeight;
+        canvas.style.width = W + 'px';
+        canvas.style.height = H + 'px';
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
+        ctx.scale(dpr, dpr);
+        buildLayout();
+      }
+
+      /* ── HEXAGON GRID ──
+         Faint hexagons drawn in the top-right quadrant, alpha tapers
+         off with distance from centre so edges dissolve naturally.     */
+      let hexagons = [];
+      function buildHexGrid() {
+        hexagons = [];
+        const size = 52, cols = 9, rows = 7;
+        const startX = W * 0.28, startY = -30;
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const x = startX + c * size * 1.75 + (r % 2) * size * 0.88;
+            const y = startY + r * size * 1.52;
+            const dist = Math.hypot(x - W * 0.6, y - H * 0.32) / (W * 0.45);
+            const alpha = Math.max(0, 0.10 - dist * 0.10);
+            if (alpha > 0.005) hexagons.push({ x, y, size, alpha });
+          }
+        }
+      }
+
+      function drawHex(x, y, s, a) {
+        ctx.beginPath();
+        for (let i = 0; i < 6; i++) {
+          const ang = Math.PI / 180 * (60 * i - 30);
+          i === 0 ? ctx.moveTo(x + s * Math.cos(ang), y + s * Math.sin(ang))
+            : ctx.lineTo(x + s * Math.cos(ang), y + s * Math.sin(ang));
+        }
+        ctx.closePath();
+        ctx.strokeStyle = `rgba(20,110,170,${a})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+
+      /* ── CIRCUIT TRACES ──
+         Each trace is a polyline with right-angle horizontal/vertical
+         segments, mimicking PCB copper tracks.
+         Decorations placed by t ∈ [0,1] along the total path length:
+           dots    → filled circle endpoint / junction
+           circles → ringed endpoint (open circle with centre dot)
+           arrows  → direction arrow (← pointing left)
+           dashes  → parallel dash marks (like speed/signal indicators) */
+      let traces = [];
+      function buildTraces() {
+        traces = [];
+        const defs = [
+          // ── Row 1 (top) ──
+          {
+            y: H * 0.12, xStart: 0.08,
+            segments: [{ len: 0.12 }, { dy: 0.04 }, { len: 0.55 }, { dy: -0.025 }, { len: 0.25 }],
+            dots: [{ t: 0 }, { t: 0.67 }], arrows: [{ t: 0.95, dir: -1 }], dashes: [{ t: 0.55 }], glow: true,
+          },
+          // ── Row 2 ──
+          {
+            y: H * 0.185, xStart: 0.06,
+            segments: [{ len: 0.08 }, { dy: 0.035 }, { len: 0.68 }, { dy: -0.02 }, { len: 0.22 }],
+            dots: [{ t: 0.08 }, { t: 0.5 }], circles: [{ t: 0.78 }], arrows: [{ t: 0.88, dir: -1 }], glow: false,
+          },
+          // ── Row 3 (main bright) ──
+          {
+            y: H * 0.26, xStart: 0.04,
+            segments: [{ len: 0.14 }, { dy: 0.055 }, { len: 0.56 }, { dy: -0.03 }, { len: 0.28 }],
+            dots: [{ t: 0.14, bright: true }], circles: [{ t: 0.32 }], arrows: [{ t: 0.58, dir: -1 }], dashes: [{ t: 0.8 }], glow: true,
+          },
+          // ── Row 4 ──
+          {
+            y: H * 0.35, xStart: 0.12,
+            segments: [{ len: 0.62 }, { dy: 0.025 }, { len: 0.26 }],
+            dots: [{ t: 0.62 }], arrows: [{ t: 0.75, dir: -1 }], glow: false,
+          },
+          // ── Row 5 (second bright) ──
+          {
+            y: H * 0.43, xStart: 0.05,
+            segments: [{ len: 0.10 }, { dy: -0.04 }, { len: 0.16 }, { dy: 0.06 }, { len: 0.54 }, { dy: -0.025 }, { len: 0.15 }],
+            dots: [{ t: 0.26, bright: true }, { t: 0.72 }], circles: [{ t: 0.12 }], arrows: [{ t: 0.87, dir: -1 }], dashes: [{ t: 0.60 }], glow: true,
+          },
+          // ── Row 6 ──
+          {
+            y: H * 0.50, xStart: 0.18,
+            segments: [{ len: 0.56 }, { dy: 0.02 }, { len: 0.26 }],
+            circles: [{ t: 0 }], arrows: [{ t: 0.80, dir: -1 }], glow: false,
+          },
+        ];
+
+        defs.forEach(def => {
+          const pts = [];
+          let cx = def.xStart * W, cy = def.y;
+          pts.push({ x: cx, y: cy });
+          let totalLen = 0;
+          const segs = [];
+
+          def.segments.forEach(s => {
+            if (s.len !== undefined) {
+              const ex = cx + s.len * W;
+              segs.push({ x0: cx, y0: cy, x1: ex, y1: cy, len: s.len * W });
+              totalLen += s.len * W; cx = ex; pts.push({ x: cx, y: cy });
+            } else if (s.dy !== undefined) {
+              const ey = cy + s.dy * H;
+              const vlen = Math.abs(s.dy * H);
+              segs.push({ x0: cx, y0: cy, x1: cx, y1: ey, len: vlen });
+              totalLen += vlen; cy = ey; pts.push({ x: cx, y: cy });
+            }
+          });
+
+          // Convert t ∈ [0,1] → {x,y} pixel coordinate along the polyline
+          function tToPoint(t) {
+            const target = t * totalLen; let acc = 0;
+            for (const seg of segs) {
+              if (acc + seg.len >= target) {
+                const frac = (target - acc) / seg.len;
+                return { x: seg.x0 + (seg.x1 - seg.x0) * frac, y: seg.y0 + (seg.y1 - seg.y0) * frac };
+              }
+              acc += seg.len;
+            }
+            return { x: segs[segs.length - 1].x1, y: segs[segs.length - 1].y1 };
+          }
+
+          traces.push({
+            pts, segs, totalLen, tToPoint,
+            dots: def.dots || [], circles: def.circles || [],
+            arrows: def.arrows || [], dashes: def.dashes || [],
+            glow: def.glow,
+          });
+        });
+      }
+
+      /* ── LIGHT PULSES ──
+         One pulse per trace. Each stores:
+           t      → current position 0→1 (loops)
+           speed  → advance per ms (kept slow: ~3× slower than default)
+           bright → whether this is a glow-class trace              */
+      let pulses = [];
+      function buildPulses() {
+        pulses = traces.map((tr, i) => ({
+          traceIdx: i,
+          t: Math.random(),
+          speed: 0.00012 + i * 0.000018 + Math.random() * 0.00006, // slow drift
+          bright: tr.glow,
+        }));
+      }
+
+      function buildLayout() { buildHexGrid(); buildTraces(); buildPulses(); }
+
+      /* ── BACKGROUND LAYERS ──
+         Three radial gradients stacked over a flat dark base:
+           g1 → dark vignette in bottom-left (matches photo in original)
+           g2 → blue atmospheric glow centre-right
+           g3 → lens flare origin top-left                           */
+      function drawBackground() {
+        ctx.fillStyle = '#030f1e';
+        ctx.fillRect(0, 0, W, H);
+
+        const g1 = ctx.createRadialGradient(W * 0.12, H * 0.75, 0, W * 0.12, H * 0.75, W * 0.55);
+        g1.addColorStop(0, 'rgba(0,6,18,0.85)'); g1.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g1; ctx.fillRect(0, 0, W, H);
+
+        const g2 = ctx.createRadialGradient(W * 0.65, H * 0.3, 0, W * 0.65, H * 0.3, W * 0.6);
+        g2.addColorStop(0, 'rgba(0,60,120,0.18)'); g2.addColorStop(0.5, 'rgba(0,35,80,0.09)'); g2.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H);
+
+        const g3 = ctx.createRadialGradient(W * 0.1, H * 0.18, 0, W * 0.1, H * 0.18, 100);
+        g3.addColorStop(0, 'rgba(0,150,220,0.12)'); g3.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g3; ctx.fillRect(0, 0, W, H);
+      }
+
+      function drawHexagons() {
+        hexagons.forEach(h => drawHex(h.x, h.y, h.size, h.alpha));
+      }
+
+      /* ── DRAW TRACES ──
+         Each trace is drawn twice for glow traces:
+           pass 1 (wide, low opacity) → soft outer glow halo
+           pass 2 (thin, higher opacity) → sharp copper line
+         Decorations drawn after lines so they sit on top.           */
+      function drawTraces() {
+        traces.forEach(tr => {
+          if (tr.pts.length < 2) return;
+
+          // Sharp line
+          ctx.beginPath();
+          ctx.moveTo(tr.pts[0].x, tr.pts[0].y);
+          for (let i = 1; i < tr.pts.length; i++) ctx.lineTo(tr.pts[i].x, tr.pts[i].y);
+          ctx.strokeStyle = tr.glow ? 'rgba(0,180,230,0.38)' : 'rgba(0,130,190,0.22)';
+          ctx.lineWidth = tr.glow ? 1.2 : 0.8;
+          ctx.stroke();
+
+          // Wide glow halo (glow traces only)
+          if (tr.glow) {
+            ctx.beginPath();
+            ctx.moveTo(tr.pts[0].x, tr.pts[0].y);
+            for (let i = 1; i < tr.pts.length; i++) ctx.lineTo(tr.pts[i].x, tr.pts[i].y);
+            ctx.strokeStyle = 'rgba(0,200,255,0.07)';
+            ctx.lineWidth = 7;
+            ctx.stroke();
+          }
+
+          // Dots
+          tr.dots.forEach(d => {
+            const p = tr.tToPoint(d.t);
+            if (d.bright) {
+              // Large radial glow + solid centre for junction nodes
+              const r = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 18);
+              r.addColorStop(0, 'rgba(0,220,255,0.65)'); r.addColorStop(0.35, 'rgba(0,160,230,0.25)'); r.addColorStop(1, 'rgba(0,0,0,0)');
+              ctx.beginPath(); ctx.arc(p.x, p.y, 18, 0, Math.PI * 2); ctx.fillStyle = r; ctx.fill();
+              ctx.beginPath(); ctx.arc(p.x, p.y, 5.5, 0, Math.PI * 2); ctx.fillStyle = 'rgba(0,220,255,0.85)'; ctx.fill();
+              ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI * 2); ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fill();
+            } else {
+              ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2); ctx.fillStyle = 'rgba(0,180,230,0.7)'; ctx.fill();
+            }
+          });
+
+          // Circles (open ring endpoint)
+          tr.circles.forEach(c => {
+            const p = tr.tToPoint(c.t);
+            ctx.beginPath(); ctx.arc(p.x, p.y, 6, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(0,180,230,0.55)'; ctx.lineWidth = 1.2; ctx.stroke();
+            ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI * 2); ctx.fillStyle = 'rgba(0,180,230,0.45)'; ctx.fill();
+          });
+
+          // Arrows (← chevron shape, dir=-1 means pointing left)
+          tr.arrows.forEach(a => {
+            const p = tr.tToPoint(a.t);
+            const dir = a.dir || -1, s = 7;
+            ctx.beginPath();
+            ctx.moveTo(p.x + s * dir, p.y);
+            ctx.lineTo(p.x - s * dir, p.y - s * 0.6);
+            ctx.lineTo(p.x - s * dir * 0.3, p.y);
+            ctx.lineTo(p.x - s * dir, p.y + s * 0.6);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(0,180,230,0.45)'; ctx.fill();
+          });
+
+          // Dashes (7 vertical bars, like a data bus symbol)
+          tr.dashes.forEach(d => {
+            const p = tr.tToPoint(d.t);
+            for (let k = -3; k <= 3; k++) {
+              ctx.fillStyle = 'rgba(0,160,210,0.4)';
+              ctx.fillRect(p.x + k * 8, p.y - 2.5, 3, 5);
+            }
+          });
+        });
+      }
+
+      /* ── DRAW PULSES ──
+         Each frame, advance t by speed×dt then draw:
+           tail  → linear gradient stroke from t-tailLen to t (fades in)
+           head  → radial gradient glow at current position
+           dot   → tiny bright centre pixel                           */
+      function drawPulses(dt) {
+        pulses.forEach(pulse => {
+          pulse.t += pulse.speed * dt;
+          if (pulse.t > 1) pulse.t -= 1; // loop back to start
+
+          const tr = traces[pulse.traceIdx];
+          const p = tr.tToPoint(pulse.t);
+
+          // Tail: walk segs from (t - tailLen) to t and stroke with gradient
+          const tailLen = 0.18;
+          const t0 = Math.max(0, pulse.t - tailLen);
+          const brightness = pulse.bright ? 0.7 : 0.4;
+
+          const grad = ctx.createLinearGradient(
+            tr.tToPoint(t0).x, tr.tToPoint(t0).y, p.x, p.y
+          );
+          grad.addColorStop(0, 'rgba(0,180,255,0)');
+          grad.addColorStop(0.5, `rgba(0,200,255,${0.15 * brightness})`);
+          grad.addColorStop(1, `rgba(120,230,255,${0.65 * brightness})`);
+
+          ctx.save();
+          ctx.beginPath();
+          let started = false, acc = 0;
+          const tStart = t0 * tr.totalLen, tEnd = pulse.t * tr.totalLen;
+          for (const seg of tr.segs) {
+            const sEnd = acc + seg.len;
+            if (sEnd < tStart) { acc += seg.len; continue; }
+            const fS = Math.max(0, (tStart - acc) / seg.len);
+            const fE = Math.min(1, (tEnd - acc) / seg.len);
+            const x0 = seg.x0 + (seg.x1 - seg.x0) * fS;
+            const y0 = seg.y0 + (seg.y1 - seg.y0) * fS;
+            const x1 = seg.x0 + (seg.x1 - seg.x0) * fE;
+            const y1 = seg.y0 + (seg.y1 - seg.y0) * fE;
+            if (!started) { ctx.moveTo(x0, y0); started = true; }
+            ctx.lineTo(x1, y1);
+            if (sEnd >= tEnd) break;
+            acc += seg.len;
+          }
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = pulse.bright ? 2.5 : 1.5;
+          ctx.stroke();
+          ctx.restore();
+
+          // Head glow (large soft radial)
+          const hr = pulse.bright ? 22 : 13;
+          const hgrd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, hr);
+          hgrd.addColorStop(0, `rgba(180,240,255,${pulse.bright ? 0.55 : 0.38})`);
+          hgrd.addColorStop(0.3, `rgba(0,200,255,${pulse.bright ? 0.25 : 0.14})`);
+          hgrd.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.beginPath(); ctx.arc(p.x, p.y, hr, 0, Math.PI * 2);
+          ctx.fillStyle = hgrd; ctx.fill();
+
+          // Bright centre dot
+          ctx.beginPath(); ctx.arc(p.x, p.y, pulse.bright ? 2.5 : 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(200,245,255,0.85)'; ctx.fill();
+        });
+      }
+
+      /* ── VIGNETTE ──
+         Final pass: radial darkening from edges inward,
+         hides trace endpoints that reach the canvas boundary.        */
+      function drawVignette() {
+        const v = ctx.createRadialGradient(W / 2, H / 2, H * 0.2, W / 2, H / 2, W * 0.72);
+        v.addColorStop(0, 'rgba(0,0,0,0)');
+        v.addColorStop(1, 'rgba(0,5,15,0.72)');
+        ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+      }
+
+      // ── rAF loop ──
+      let last = 0;
+      function frame(ts) {
+        const dt = Math.min(ts - last, 50); // cap dt at 50ms to avoid jump on tab-switch
+        last = ts;
+        ctx.clearRect(0, 0, W, H);
+        drawBackground();
+        drawHexagons();
+        drawTraces();
+        drawPulses(dt);
+        drawVignette();
+        requestAnimationFrame(frame);
+      }
+
+      // Start
+      resize();
+      window.addEventListener('resize', resize);
+      requestAnimationFrame(t => { last = t; frame(t); });
+    })();
+  </script>
+  <!-- ============================================================
+    END CIRCUIT BG
+  ============================================================ -->
+
 </body>
 
 </html>
